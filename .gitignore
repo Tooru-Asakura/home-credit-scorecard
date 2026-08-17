@@ -1,0 +1,17 @@
+# 数据文件（3.2GB，不推线上）
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
+
+# 面试材料（不属于项目代码）
+torch.md
+
+# IDE
+.vscode/
+.idea/

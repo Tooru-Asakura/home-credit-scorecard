@@ -1,0 +1,2862 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>API_REFERENCE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="home-credit-%E8%AF%84%E5%88%86%E5%8D%A1%E9%A1%B9%E7%9B%AE--api-%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3">Home Credit 评分卡项目 —— API 参考文档</h1>
+<blockquote>
+<p>版本：v1.0 | 更新日期：2026-03-02 | 语言：Python 3.10</p>
+</blockquote>
+<hr>
+<h2 id="%E7%9B%AE%E5%BD%95">目录</h2>
+<ol>
+<li><a href="#1-%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%A7%88">项目概览</a></li>
+<li><a href="#2-%E6%A8%A1%E5%9D%97%E6%96%87%E6%A1%A3">模块文档</a>
+<ul>
+<li><a href="#21-srcconfigpy">src/config.py</a></li>
+<li><a href="#22-srcdata_loaderpy">src/data_loader.py</a></li>
+<li><a href="#23-srcpreprocessingpy">src/preprocessing.py</a></li>
+<li><a href="#24-srcfeature_engineeringpy">src/feature_engineering.py</a></li>
+<li><a href="#25-srcfeature_selectionpy">src/feature_selection.py</a></li>
+<li><a href="#26-srcwoe_encodingpy">src/woe_encoding.py</a></li>
+<li><a href="#27-srcmodel_lrpy">src/model_lr.py</a></li>
+<li><a href="#28-srcscorecardpy">src/scorecard.py</a></li>
+<li><a href="#29-mainpy">main.py</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%AE%8C%E6%95%B4%E8%B0%83%E7%94%A8%E9%93%BE%E8%B7%AF">完整调用链路</a></li>
+<li><a href="#4-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E">输入输出文件说明</a></li>
+</ol>
+<hr>
+<h2 id="1-%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%A7%88">1. 项目概览</h2>
+<p><strong>项目目标</strong>：基于 Kaggle Home Credit Default Risk 数据集，构建一套端到端的信贷评分卡系统，输出标准评分卡（PDO=20，基准分=600），用于贷前信用风险决策。</p>
+<h3 id="11-%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%E6%B5%81%E7%A8%8B%E5%9B%BE">1.1 技术路线流程图</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    A[原始CSV数据\n7张表] --> B[数据加载\ndata_loader]
+    B --> C[数据清洗\npreprocessing]
+    C --> D[特征工程\nfeature_engineering\n214个特征]
+    D --> E[LGB特征筛选\nfeature_selection\nTop-40特征]
+    E --> F[WoE编码\nwoe_encoding\nIV筛选→28特征]
+    F --> G[共线性剔除\nmodel_lr\n23特征]
+    G --> H[LR建模\n5折CV\nKS=0.37]
+    H --> I[评分卡转换\nscorecard\n评分范围693~763]
+</div></code></pre>
+<h3 id="12-%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E5%9B%BE">1.2 模块依赖关系图</h3>
+<pre class="hljs"><code><div>main.py
+├── src/data_loader.py          ← 依赖: config
+├── src/feature_engineering.py  ← 依赖: preprocessing, config
+│   └── src/preprocessing.py   ← 无内部依赖
+├── src/feature_selection.py    ← 依赖: config
+├── src/woe_encoding.py         ← 依赖: config
+├── src/model_lr.py             ← 依赖: config
+└── src/scorecard.py            ← 依赖: config
+    └── src/config.py           ← 无内部依赖（根节点）
+</div></code></pre>
+<h3 id="13-%E5%85%B3%E9%94%AE%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E8%AE%AD%E7%BB%83%E9%9B%86%E7%BB%93%E6%9E%9C">1.3 关键性能指标（训练集结果）</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>LGB（特征筛选）</th>
+<th>LR（评分卡）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OOF AUC</td>
+<td>0.7881</td>
+<td>0.7456</td>
+</tr>
+<tr>
+<td>OOF KS</td>
+<td>—</td>
+<td>0.3663 ✓</td>
+</tr>
+<tr>
+<td>Gini</td>
+<td>—</td>
+<td>0.4912</td>
+</tr>
+<tr>
+<td>评分范围</td>
+<td>—</td>
+<td>693 ~ 763</td>
+</tr>
+<tr>
+<td>好坏均分差</td>
+<td>—</td>
+<td>12.7 分</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-%E6%A8%A1%E5%9D%97%E6%96%87%E6%A1%A3">2. 模块文档</h2>
+<hr>
+<h3 id="21-srcconfigpy">2.1 <code>src/config.py</code></h3>
+<p><strong>模块职责</strong>：全局配置中心，集中管理所有路径、文件名、模型超参数和评分卡参数，避免硬编码散落各处。</p>
+<p><strong>依赖模块</strong>：无（项目根节点，仅依赖标准库 <code>os</code>）</p>
+<p><strong>对外提供的配置项</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BASE_DIR</code></td>
+<td>str</td>
+<td>自动推断</td>
+<td>项目根目录绝对路径</td>
+</tr>
+<tr>
+<td><code>DATA_RAW</code></td>
+<td>str</td>
+<td><code>data/raw/</code></td>
+<td>原始 CSV 存放目录</td>
+</tr>
+<tr>
+<td><code>DATA_PROCESSED</code></td>
+<td>str</td>
+<td><code>data/processed/</code></td>
+<td>中间产物目录（特征缓存）</td>
+</tr>
+<tr>
+<td><code>OUTPUT_DIR</code></td>
+<td>str</td>
+<td><code>outputs/</code></td>
+<td>所有输出根目录</td>
+</tr>
+<tr>
+<td><code>MODEL_DIR</code></td>
+<td>str</td>
+<td><code>outputs/models/</code></td>
+<td>模型文件目录</td>
+</tr>
+<tr>
+<td><code>FEATURE_DIR</code></td>
+<td>str</td>
+<td><code>outputs/features/</code></td>
+<td>特征重要性/WoE 映射目录</td>
+</tr>
+<tr>
+<td><code>SCORECARD_DIR</code></td>
+<td>str</td>
+<td><code>outputs/scorecard/</code></td>
+<td>评分卡输出目录</td>
+</tr>
+<tr>
+<td><code>FILES</code></td>
+<td>dict</td>
+<td>—</td>
+<td>7 张原始 CSV 的文件名映射</td>
+</tr>
+<tr>
+<td><code>TARGET</code></td>
+<td>str</td>
+<td><code>'TARGET'</code></td>
+<td>目标变量列名（1=违约，0=正常）</td>
+</tr>
+<tr>
+<td><code>ID_COL</code></td>
+<td>str</td>
+<td><code>'SK_ID_CURR'</code></td>
+<td>申请人唯一标识列名</td>
+</tr>
+<tr>
+<td><code>LGB_PARAMS</code></td>
+<td>dict</td>
+<td>见下表</td>
+<td>LightGBM 超参数</td>
+</tr>
+<tr>
+<td><code>LGB_CV_FOLDS</code></td>
+<td>int</td>
+<td><code>5</code></td>
+<td>交叉验证折数</td>
+</tr>
+<tr>
+<td><code>LGB_EARLY_STOP</code></td>
+<td>int</td>
+<td><code>150</code></td>
+<td>早停窗口轮数</td>
+</tr>
+<tr>
+<td><code>IMPORTANCE_THRESHOLD</code></td>
+<td>int</td>
+<td><code>10</code></td>
+<td>LGB 重要性最低阈值</td>
+</tr>
+<tr>
+<td><code>TARGET_FEATURE_NUM</code></td>
+<td>int</td>
+<td><code>40</code></td>
+<td>特征筛选目标数量</td>
+</tr>
+<tr>
+<td><code>CORRELATION_THRESHOLD</code></td>
+<td>float</td>
+<td><code>0.85</code></td>
+<td>共线性剔除相关系数阈值</td>
+</tr>
+<tr>
+<td><code>PDO</code></td>
+<td>int</td>
+<td><code>20</code></td>
+<td>Points to Double Odds</td>
+</tr>
+<tr>
+<td><code>BASE_SCORE</code></td>
+<td>int</td>
+<td><code>600</code></td>
+<td>基准分</td>
+</tr>
+<tr>
+<td><code>BASE_ODDS</code></td>
+<td>int</td>
+<td><code>50</code></td>
+<td>基准好坏比（好人数/坏人数）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="lgbparams-%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E">LGB_PARAMS 详细说明</h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>业务原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_estimators</code></td>
+<td>3000</td>
+<td>配合早停使用，不会真的跑满；留足迭代空间</td>
+</tr>
+<tr>
+<td><code>learning_rate</code></td>
+<td>0.05</td>
+<td>特征筛选阶段合理默认值，不追求极致 AUC</td>
+</tr>
+<tr>
+<td><code>num_leaves</code></td>
+<td>31</td>
+<td>控制单棵树复杂度，防噪声特征 importance 虚高</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td>6</td>
+<td>与 <code>num_leaves</code> 双重约束树深度</td>
+</tr>
+<tr>
+<td><code>min_child_samples</code></td>
+<td>100</td>
+<td>307k 数据集每叶最少样本数，原值 20 过小会产生噪声叶节点</td>
+</tr>
+<tr>
+<td><code>min_split_gain</code></td>
+<td>0.01</td>
+<td>过滤 AUC 提升极微小的无效分裂</td>
+</tr>
+<tr>
+<td><code>feature_fraction</code></td>
+<td>0.7</td>
+<td>列采样；更低采样减少共线性特征&quot;轮流上榜&quot;</td>
+</tr>
+<tr>
+<td><code>bagging_fraction</code></td>
+<td>0.8</td>
+<td>行采样，防过拟合</td>
+</tr>
+<tr>
+<td><code>reg_alpha</code></td>
+<td>0.5</td>
+<td>L1 正则，让弱特征权重趋向 0</td>
+</tr>
+<tr>
+<td><code>reg_lambda</code></td>
+<td>1.0</td>
+<td>L2 正则，抑制对局部噪声的过拟合</td>
+</tr>
+<tr>
+<td><strong><code>scale_pos_weight</code></strong></td>
+<td><strong>11</strong></td>
+<td><strong>正负样本比 ≈ 1:11（违约率 8.1%），0.919/0.081≈11；不加此参数模型偏向多数类</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="22-srcdataloaderpy">2.2 <code>src/data_loader.py</code></h3>
+<p><strong>模块职责</strong>：负责从 <code>data/raw/</code> 目录读取所有原始 CSV 文件，返回统一的字典结构。</p>
+<p><strong>依赖模块</strong>：<code>src/config</code>（<code>DATA_RAW</code>, <code>FILES</code>）</p>
+<p><strong>对外提供的函数</strong>：</p>
+<ul>
+<li><code>load_data(name)</code></li>
+<li><code>load_all()</code></li>
+</ul>
+<hr>
+<h4 id="loaddataname-str---pddataframe"><code>load_data(name: str) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：按名称读取单张原始 CSV 表。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>str</td>
+<td><code>FILES</code> 字典中的 key，如 <code>'application'</code>、<code>'bureau'</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，读取到的原始表</p>
+<p><strong>异常</strong>：若文件不存在抛出 <code>FileNotFoundError</code></p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.data_loader <span class="hljs-keyword">import</span> load_data
+app = load_data(<span class="hljs-string">'application'</span>)   <span class="hljs-comment"># 读取 application_train.csv</span>
+</div></code></pre>
+<hr>
+<h4 id="loadall---dict"><code>load_all() -&gt; dict</code></h4>
+<p><strong>功能描述</strong>：一次性读取所有 7 张原始表，打印各表的 shape 并返回字典。</p>
+<p><strong>参数说明</strong>：无</p>
+<p><strong>返回值</strong>：<code>dict</code>，格式为 <code>{表名: DataFrame}</code></p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-string">'application'</span>   : DataFrame(<span class="hljs-number">307511</span>, <span class="hljs-number">122</span>),
+    <span class="hljs-string">'bureau'</span>        : DataFrame(<span class="hljs-number">1716428</span>, <span class="hljs-number">17</span>),
+    <span class="hljs-string">'bureau_balance'</span>: DataFrame(<span class="hljs-number">27299925</span>, <span class="hljs-number">3</span>),
+    <span class="hljs-string">'previous'</span>      : DataFrame(<span class="hljs-number">1670214</span>, <span class="hljs-number">37</span>),
+    <span class="hljs-string">'pos'</span>           : DataFrame(<span class="hljs-number">10001358</span>, <span class="hljs-number">8</span>),
+    <span class="hljs-string">'credit_card'</span>   : DataFrame(<span class="hljs-number">3840312</span>, <span class="hljs-number">23</span>),
+    <span class="hljs-string">'installments'</span>  : DataFrame(<span class="hljs-number">13605401</span>, <span class="hljs-number">8</span>),
+}
+</div></code></pre>
+<p><strong>业务逻辑说明</strong>：数据以申请人（<code>SK_ID_CURR</code>）为主键，<code>bureau</code>/<code>previous</code>/<code>pos</code> 等子表按申请人做 left join 聚合后才能与主表合并。</p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.data_loader <span class="hljs-keyword">import</span> load_all
+data = load_all()
+print(data[<span class="hljs-string">'bureau'</span>].shape)   <span class="hljs-comment"># (1716428, 17)</span>
+</div></code></pre>
+<hr>
+<h3 id="23-srcpreprocessingpy">2.3 <code>src/preprocessing.py</code></h3>
+<p><strong>模块职责</strong>：主表数据清洗与基础编码，修复已知异常值，为特征工程提供干净的输入。</p>
+<p><strong>依赖模块</strong>：无内部依赖（仅 numpy/pandas/sklearn）</p>
+<p><strong>对外提供的函数</strong>：</p>
+<ul>
+<li><code>clean_application(df)</code></li>
+<li><code>encode_categoricals(df)</code></li>
+<li><code>fill_missing(df)</code></li>
+</ul>
+<hr>
+<h4 id="cleanapplicationdf-pddataframe---pddataframe"><code>clean_application(df: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：对主表（<code>application_train</code>）执行异常值修复和基础特征衍生。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>原始 application_train 表</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，清洗后的主表（保留所有原始列，新增时间衍生列）</p>
+<p><strong>业务逻辑说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>处理项</th>
+<th>原始问题</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DAYS_EMPLOYED=365243</code></td>
+<td>未就业占位符，不是真实天数</td>
+<td>替换为 <code>NaN</code></td>
+</tr>
+<tr>
+<td><code>AGE_YEARS</code></td>
+<td>原始 <code>DAYS_BIRTH</code> 为负数（天）</td>
+<td>取 <code>-DAYS_BIRTH/365</code>，转为正数年龄</td>
+</tr>
+<tr>
+<td><code>CODE_GENDER='XNA'</code></td>
+<td>仅 4 条，无效性别</td>
+<td>替换为 <code>NaN</code></td>
+</tr>
+<tr>
+<td>金额字段负值</td>
+<td>数据录入错误</td>
+<td><code>clip(lower=0)</code> 截断为 0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.preprocessing <span class="hljs-keyword">import</span> clean_application
+app_clean = clean_application(data[<span class="hljs-string">'application'</span>])
+</div></code></pre>
+<hr>
+<h4 id="encodecategoricalsdf-pddataframe---pddataframe"><code>encode_categoricals(df: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：对所有 <code>object</code> 类型列进行 <code>LabelEncoder</code> 整数编码。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>含类别变量的 DataFrame</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，类别列已替换为整数</p>
+<p><strong>业务逻辑说明</strong>：LightGBM 可直接处理整数编码的类别变量；后续 LR 阶段会用 WoE 值替换，此处只做最基础的兼容性处理。缺失值先填 <code>'missing'</code> 再编码，避免 <code>LabelEncoder</code> 报错。</p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.preprocessing <span class="hljs-keyword">import</span> encode_categoricals
+df_encoded = encode_categoricals(app_clean)
+</div></code></pre>
+<hr>
+<h4 id="fillmissingdf-pddataframe---pddataframe"><code>fill_missing(df: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：按字段语义分策略填充缺失值。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>待填充的 DataFrame</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，缺失值已填充</p>
+<p><strong>业务逻辑说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>字段类型</th>
+<th>判断规则</th>
+<th>填充值</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>计数/求和类特征</td>
+<td>列名含 <code>COUNT</code>/<code>SUM</code>/<code>_NUM</code></td>
+<td><code>0</code></td>
+<td>无子表记录 = 0 次，语义正确</td>
+</tr>
+<tr>
+<td>其余数值特征</td>
+<td>剩余数值列</td>
+<td><code>-999</code></td>
+<td>缺失标记；对树模型友好（树会自动学到&quot;缺失&quot;这个分割点）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.preprocessing <span class="hljs-keyword">import</span> fill_missing
+df_filled = fill_missing(df_encoded)
+</div></code></pre>
+<hr>
+<h3 id="24-srcfeatureengineeringpy">2.4 <code>src/feature_engineering.py</code></h3>
+<p><strong>模块职责</strong>：从 7 张原始表中提取和衍生全量特征，最终输出一张宽表（307511 × 214），供 LGB 特征筛选使用。</p>
+<p><strong>依赖模块</strong>：<code>src/preprocessing</code>（<code>clean_application</code>, <code>encode_categoricals</code>, <code>fill_missing</code>）</p>
+<p><strong>对外提供的函数</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat_application(df)</code></td>
+<td>主表衍生特征（负债比、就业稳定性、EXT 交叉等）</td>
+</tr>
+<tr>
+<td><code>feat_bureau(bureau, bureau_bal)</code></td>
+<td>外部征信两级聚合特征</td>
+</tr>
+<tr>
+<td><code>feat_installments(inst)</code></td>
+<td>分期还款行为特征（DPD/DBD/6M窗口/趋势）</td>
+</tr>
+<tr>
+<td><code>feat_credit_card(cc)</code></td>
+<td>信用卡使用行为特征（利用率/还款比例）</td>
+</tr>
+<tr>
+<td><code>feat_pos(pos)</code></td>
+<td>POS/现金贷月度还款状态特征</td>
+</tr>
+<tr>
+<td><code>feat_previous(prev)</code></td>
+<td>HC 历史申请记录特征</td>
+</tr>
+<tr>
+<td><code>feat_cross(df)</code></td>
+<td>跨表交叉特征（多重风险叠加信号）</td>
+</tr>
+<tr>
+<td><code>build_features(data)</code></td>
+<td>主入口：合并所有子表特征，返回完整宽表</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="featapplicationdf-pddataframe---pddataframe"><code>feat_application(df: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：在主表上衍生负债压力、就业稳定性、材料完整度、社交圈风险、EXT_SOURCE 交叉等特征。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>经过 <code>clean_application</code> 处理后的主表（已含 <code>AGE_YEARS</code>、<code>DAYS_EMPLOYED_YEARS</code>）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，追加衍生列后的主表</p>
+<p><strong>衍生特征一览</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>计算公式</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CREDIT_INCOME_RATIO</code></td>
+<td><code>AMT_CREDIT / (AMT_INCOME_TOTAL+1)</code></td>
+<td>DTI（债务收入比），值越大还款压力越大</td>
+</tr>
+<tr>
+<td><code>ANNUITY_INCOME_RATIO</code></td>
+<td><code>AMT_ANNUITY / (AMT_INCOME_TOTAL+1)</code></td>
+<td>月还款收入比，反映月现金流压力</td>
+</tr>
+<tr>
+<td><code>CREDIT_TERM</code></td>
+<td><code>AMT_CREDIT / (AMT_ANNUITY+1)</code></td>
+<td>贷款期限估算（年），期限越长信用暴露越高</td>
+</tr>
+<tr>
+<td><code>CREDIT_GOODS_RATIO</code></td>
+<td><code>AMT_CREDIT / (AMT_GOODS_PRICE+1)</code></td>
+<td>套现信号，<code>&gt;&gt;1</code> 说明贷款远超商品价值</td>
+</tr>
+<tr>
+<td><code>INCOME_PER_PERSON</code></td>
+<td><code>AMT_INCOME_TOTAL / (CNT_FAM_MEMBERS+1)</code></td>
+<td>家庭人均收入，比总收入更能反映还款余力</td>
+</tr>
+<tr>
+<td><code>EMPLOYED_TO_AGE_RATIO</code></td>
+<td><code>DAYS_EMPLOYED_YEARS / (AGE_YEARS+1)</code></td>
+<td>就业年限占年龄比，高值代表职业稳定</td>
+</tr>
+<tr>
+<td><code>DOCUMENT_COUNT</code></td>
+<td><code>FLAG_DOCUMENT_*</code> 求和</td>
+<td>提交材料数量，少→信息不透明→风险高</td>
+</tr>
+<tr>
+<td><code>CONTACT_COUNT</code></td>
+<td>联系方式标志求和</td>
+<td>可触达性，高→催收容易→风险偏低</td>
+</tr>
+<tr>
+<td><code>SOCIAL_CIRCLE_DEF_RATE_30</code></td>
+<td><code>DEF_30 / (OBS_30+1)</code></td>
+<td>30天社交圈违约率，信用风险具传染性</td>
+</tr>
+<tr>
+<td><code>SOCIAL_CIRCLE_DEF_RATE_60</code></td>
+<td><code>DEF_60 / (OBS_60+1)</code></td>
+<td>60天社交圈违约率，更长观察窗口</td>
+</tr>
+<tr>
+<td><code>EXT_SOURCE_MEAN</code></td>
+<td>三源均值（忽略缺失）</td>
+<td>综合外部征信评分，是数据集最强预测特征</td>
+</tr>
+<tr>
+<td><code>EXT_SOURCE_STD</code></td>
+<td>三源标准差</td>
+<td>评分离散度越大→不同机构评价分歧→信用画像不稳定</td>
+</tr>
+<tr>
+<td><code>EXT_SOURCE_PROD</code></td>
+<td>三源乘积</td>
+<td>同时惩罚所有维度偏低的情况</td>
+</tr>
+<tr>
+<td><code>EXT_SOURCE_1_2</code></td>
+<td><code>EXT_SOURCE_1 × EXT_SOURCE_2</code></td>
+<td>两机构评分协同效应</td>
+</tr>
+<tr>
+<td><code>EXT_SOURCE_2_3</code></td>
+<td><code>EXT_SOURCE_2 × EXT_SOURCE_3</code></td>
+<td>最强单特征与3的交叉</td>
+</tr>
+<tr>
+<td><code>EXT_SOURCE_2_AGE</code></td>
+<td><code>EXT_SOURCE_2 × AGE_YEARS</code></td>
+<td>外部评分×年龄，放大&quot;老+好&quot;组合信号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_application
+app = feat_application(app_clean)  <span class="hljs-comment"># 输入已经过 clean_application 处理</span>
+</div></code></pre>
+<hr>
+<h4 id="featbureaubureau-pddataframe-bureaubal-pddataframe---pddataframe"><code>feat_bureau(bureau: pd.DataFrame, bureau_bal: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：对外部征信数据进行两级聚合，最终输出以 <code>SK_ID_CURR</code>（申请人）为粒度的聚合特征表。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bureau</code></td>
+<td>pd.DataFrame</td>
+<td>外部征信单笔借据表（1,716,428 行 × 17 列）</td>
+</tr>
+<tr>
+<td><code>bureau_bal</code></td>
+<td>pd.DataFrame</td>
+<td>外部征信月度还款快照表（27,299,925 行 × 3 列）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，以 <code>SK_ID_CURR</code> 为主键的聚合特征表（约 305k 行）</p>
+<p><strong>业务逻辑说明——两级聚合层次</strong>：</p>
+<pre class="hljs"><code><div>bureau_balance（每笔贷款的月度状态）
+    ↓ Level-1 聚合：按 SK_ID_BUREAU 汇总
+bureau（每笔贷款的基本信息）
+    ↓ Level-2 聚合：按 SK_ID_CURR 汇总
+application（申请人级别）
+</div></code></pre>
+<p><strong>Level-1 中间特征（<code>SK_ID_BUREAU</code> 粒度）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BB_MONTH_COUNT</code></td>
+<td>该笔贷款存续月数</td>
+</tr>
+<tr>
+<td><code>BB_DPD_COUNT</code></td>
+<td>历史逾期月数（<code>STATUS &gt;= 1</code>）</td>
+</tr>
+<tr>
+<td><code>BB_DPD_RATE</code></td>
+<td>逾期月比率 = 逾期月数 / 总月数</td>
+</tr>
+<tr>
+<td><code>BB_STATUS_MAX</code></td>
+<td>历史最严重逾期等级（1~5）</td>
+</tr>
+<tr>
+<td><code>BB_STATUS_MEAN</code></td>
+<td>平均逾期等级</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>STATUS</code> 映射：<code>C/X/0 → 0</code>（无逾期），<code>1~5 → 1~5</code>（逾期月数级别）</p>
+</blockquote>
+<p><strong>Level-2 输出特征（<code>SK_ID_CURR</code> 粒度）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BUREAU_COUNT</code></td>
+<td>历史外部借贷笔数</td>
+</tr>
+<tr>
+<td><code>BUREAU_ACTIVE_COUNT/RATE</code></td>
+<td>当前仍激活贷款数/比例</td>
+</tr>
+<tr>
+<td><code>BUREAU_CREDIT_SUM_MEAN/MAX</code></td>
+<td>单笔外部授信均值/最大值</td>
+</tr>
+<tr>
+<td><code>BUREAU_DEBT_SUM/MEAN</code></td>
+<td>外部未偿债务总量/均值</td>
+</tr>
+<tr>
+<td><code>BUREAU_OVERDUE_MEAN/MAX</code></td>
+<td>逾期金额均值/最大值</td>
+</tr>
+<tr>
+<td><code>BUREAU_DAYS_CREDIT_MEAN/MAX</code></td>
+<td>借贷记录年龄（天）</td>
+</tr>
+<tr>
+<td><code>BUREAU_UTIL_MEAN/MAX</code></td>
+<td>外部贷款使用率（已用/批准）</td>
+</tr>
+<tr>
+<td><code>BUREAU_PROLONG_SUM</code></td>
+<td>历史展期次数（软性违约信号）</td>
+</tr>
+<tr>
+<td><code>BUREAU_BB_DPD_RATE_MEAN</code></td>
+<td>月度逾期率均值（跨级聚合）</td>
+</tr>
+<tr>
+<td><code>BUREAU_BB_STATUS_MAX</code></td>
+<td>历史最严重逾期等级（跨级聚合）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_bureau
+bureau_feat = feat_bureau(data[<span class="hljs-string">'bureau'</span>], data[<span class="hljs-string">'bureau_balance'</span>])
+<span class="hljs-comment"># 返回 shape ≈ (305811, 18)，以 SK_ID_CURR 为主键</span>
+</div></code></pre>
+<hr>
+<h4 id="featinstallmentsinst-pddataframe---pddataframe"><code>feat_installments(inst: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：从分期还款流水表中提取还款纪律特征，包括全量历史聚合、近 6 个月窗口聚合和趋势特征。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inst</code></td>
+<td>pd.DataFrame</td>
+<td><code>installments_payments.csv</code>，13,605,401 行，每行一次应还/实还事件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，以 <code>SK_ID_CURR</code> 为主键的聚合特征表</p>
+<p><strong>中间衍生变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>公式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DPD</code></td>
+<td><code>(实还日 - 应还日).clip(0)</code></td>
+<td>逾期天数（正数），提前还款截断为 0</td>
+</tr>
+<tr>
+<td><code>DBD</code></td>
+<td><code>(应还日 - 实还日).clip(0)</code></td>
+<td>提前还款天数（正数），逾期截断为 0</td>
+</tr>
+<tr>
+<td><code>PAYMENT_RATIO</code></td>
+<td><code>AMT_PAYMENT / (AMT_INSTALMENT+1)</code></td>
+<td>还款比例：1=全额，&lt;1=欠缴，&gt;1=超额还款</td>
+</tr>
+<tr>
+<td><code>PAYMENT_DIFF</code></td>
+<td><code>AMT_INSTALMENT - AMT_PAYMENT</code></td>
+<td>还款缺口（应还-实还绝对金额）</td>
+</tr>
+<tr>
+<td><code>IS_LATE</code></td>
+<td><code>DPD &gt; 0</code></td>
+<td>是否逾期（0/1）</td>
+</tr>
+<tr>
+<td><code>IS_UNDERPAY</code></td>
+<td><code>PAYMENT_DIFF &gt; 0</code></td>
+<td>是否少还（0/1）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>输出特征（全量 + 6M 窗口 + 趋势）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>类型</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INST_COUNT</code></td>
+<td>全量</td>
+<td>历史还款记录总条数</td>
+</tr>
+<tr>
+<td><code>INST_DPD_MEAN/MAX/SUM</code></td>
+<td>全量</td>
+<td>平均/最大/累计逾期天数</td>
+</tr>
+<tr>
+<td><code>INST_DBD_MEAN</code></td>
+<td>全量</td>
+<td>平均提前还款天数（越大还款习惯越好）</td>
+</tr>
+<tr>
+<td><code>INST_LATE_RATE/COUNT</code></td>
+<td>全量</td>
+<td>逾期率 / 逾期次数</td>
+</tr>
+<tr>
+<td><code>INST_UNDERPAY_RATE</code></td>
+<td>全量</td>
+<td>少还率</td>
+</tr>
+<tr>
+<td><code>INST_PAYMENT_RATIO_MEAN/MIN</code></td>
+<td>全量</td>
+<td>平均/最低还款比例</td>
+</tr>
+<tr>
+<td><code>INST_PAYMENT_DIFF_MEAN/SUM</code></td>
+<td>全量</td>
+<td>平均/累计欠款金额</td>
+</tr>
+<tr>
+<td><code>INST_RECENT_DPD_MEAN_6M</code></td>
+<td>6M 窗口</td>
+<td>近6月平均逾期天数（<code>DAYS_INSTALMENT &gt;= -180</code>）</td>
+</tr>
+<tr>
+<td><code>INST_RECENT_LATE_RATE_6M</code></td>
+<td>6M 窗口</td>
+<td>近6月逾期率</td>
+</tr>
+<tr>
+<td><code>INST_RECENT_PAY_RATIO_6M</code></td>
+<td>6M 窗口</td>
+<td>近6月平均还款比例</td>
+</tr>
+<tr>
+<td><code>INST_DPD_TREND</code></td>
+<td>趋势</td>
+<td>近6M均值 / 全量均值，<code>&gt;1</code> 表示近期逾期恶化</td>
+</tr>
+<tr>
+<td><code>INST_LATE_TREND</code></td>
+<td>趋势</td>
+<td>近6M逾期率 / 全量逾期率，方向性预警信号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>业务逻辑说明</strong>：近期行为比远期行为更能预测未来违约（行为漂移捕捉）。<code>INST_DPD_TREND &gt; 1</code> 是最强的风险预警信号之一，说明客户近期还款能力在恶化。</p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_installments
+inst_feat = feat_installments(data[<span class="hljs-string">'installments'</span>])
+</div></code></pre>
+<hr>
+<h4 id="featcreditcardcc-pddataframe---pddataframe"><code>feat_credit_card(cc: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：从信用卡月度账单快照中提取信用卡使用行为特征，核心是利用率和还款完整性。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cc</code></td>
+<td>pd.DataFrame</td>
+<td><code>credit_card_balance.csv</code>，3,840,312 行，每行一张卡某月的账单快照</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，以 <code>SK_ID_CURR</code> 为主键的聚合特征表</p>
+<p><strong>中间衍生变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>公式</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CC_UTILIZATION</code></td>
+<td><code>AMT_BALANCE / (AMT_CREDIT_LIMIT_ACTUAL+1)</code></td>
+<td>信用卡使用率（FICO 最关键指标之一，&gt;30% 开始扣分，&gt;90% 极高风险）</td>
+</tr>
+<tr>
+<td><code>CC_PAYMENT_RATIO</code></td>
+<td><code>AMT_PAYMENT_CURRENT / (AMT_BALANCE+1)</code></td>
+<td>当月还款比例，=1 全额还款；低→滚动负债累积</td>
+</tr>
+<tr>
+<td><code>CC_MIN_PAY_RATIO</code></td>
+<td><code>AMT_PAYMENT_CURRENT / (AMT_PAYMENT_TOTAL_CURRENT+1)</code></td>
+<td>最低还款比率，仅还最低额→偿债意愿弱</td>
+</tr>
+<tr>
+<td><code>CC_IS_DPD</code></td>
+<td><code>SK_DPD &gt; 0</code></td>
+<td>该账单月是否逾期</td>
+</tr>
+</tbody>
+</table>
+<p><strong>输出聚合特征</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CC_COUNT</code></td>
+<td>信用卡账单总条数（使用时长）</td>
+</tr>
+<tr>
+<td><code>CC_BALANCE_MEAN/MAX</code></td>
+<td>月末余额均值/最大值，高→持续高负债</td>
+</tr>
+<tr>
+<td><code>CC_LIMIT_MEAN</code></td>
+<td>平均信用额度，高→资质较好</td>
+</tr>
+<tr>
+<td><code>CC_UTILIZATION_MEAN/MAX</code></td>
+<td>使用率均值（日常习惯）/最大值（历史峰值压力）</td>
+</tr>
+<tr>
+<td><code>CC_PAYMENT_RATIO_MEAN</code></td>
+<td>平均还款比例</td>
+</tr>
+<tr>
+<td><code>CC_MIN_PAY_RATIO_MEAN</code></td>
+<td>长期仅还最低额是强风险信号</td>
+</tr>
+<tr>
+<td><code>CC_DPD_MEAN/MAX</code></td>
+<td>平均/最大逾期天数</td>
+</tr>
+<tr>
+<td><code>CC_IS_DPD_RATE</code></td>
+<td>逾期账单月比率</td>
+</tr>
+<tr>
+<td><code>CC_DRAWINGS_MEAN</code></td>
+<td>平均月消费金额（<code>AMT_DRAWINGS_CURRENT</code>）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_credit_card
+cc_feat = feat_credit_card(data[<span class="hljs-string">'credit_card'</span>])
+</div></code></pre>
+<hr>
+<h4 id="featpospos-pddataframe---pddataframe"><code>feat_pos(pos: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：从 POS/现金贷月度快照中提取 HC 内部产品线的还款状态特征，与 <code>feat_bureau</code> 的外部数据互补。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pos</code></td>
+<td>pd.DataFrame</td>
+<td><code>POS_CASH_balance.csv</code>，10,001,358 行，每行一笔 HC 历史贷款某月快照</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，以 <code>SK_ID_CURR</code> 为主键的聚合特征表</p>
+<p><strong>中间衍生变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>公式</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POS_IS_DPD</code></td>
+<td><code>SK_DPD &gt; 0</code></td>
+<td>普通逾期（宽口径）</td>
+</tr>
+<tr>
+<td><code>POS_IS_DPD_DEF</code></td>
+<td><code>SK_DPD_DEF &gt; 0</code></td>
+<td>严重逾期（窄口径，监管定义违约级别）</td>
+</tr>
+<tr>
+<td><code>POS_PROGRESS</code></td>
+<td><code>1 - CNT_INSTALMENT_FUTURE / (CNT_INSTALMENT+1)</code></td>
+<td>还款进度，接近1→即将还清仍逾期→持续偿债能力不足</td>
+</tr>
+</tbody>
+</table>
+<p><strong>输出聚合特征</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POS_COUNT</code></td>
+<td>历史 POS/现金贷账单总条数</td>
+</tr>
+<tr>
+<td><code>POS_DPD_MEAN/MAX</code></td>
+<td>平均/最大逾期天数</td>
+</tr>
+<tr>
+<td><code>POS_IS_DPD_RATE</code></td>
+<td>宽口径逾期月比率</td>
+</tr>
+<tr>
+<td><code>POS_IS_DPD_DEF_RATE</code></td>
+<td>窄口径严重逾期月比率（信号更强）</td>
+</tr>
+<tr>
+<td><code>POS_PROGRESS_MEAN</code></td>
+<td>平均还款进度（训练结果中 LGB importance 排名 3）</td>
+</tr>
+<tr>
+<td><code>POS_MONTHS_COUNT</code></td>
+<td>贷款存续月数（与 HC 关系深度）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_pos
+pos_feat = feat_pos(data[<span class="hljs-string">'pos'</span>])
+</div></code></pre>
+<hr>
+<h4 id="featpreviousprev-pddataframe---pddataframe"><code>feat_previous(prev: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：从 HC 历史申请记录中提取申请行为模式特征，类似 FICO 的&quot;新申请&quot;维度（占10%权重）。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prev</code></td>
+<td>pd.DataFrame</td>
+<td><code>previous_application.csv</code>，1,670,214 行，每行一笔历史申请</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，以 <code>SK_ID_CURR</code> 为主键的聚合特征表</p>
+<p><strong>中间衍生变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>公式 / 规则</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PREV_CREDIT_APP_RATIO</code></td>
+<td><code>AMT_CREDIT / (AMT_APPLICATION+1)</code></td>
+<td>实批/申请比，&lt;1 说明被砍额，长期砍额→HC 历史认为风险偏高</td>
+</tr>
+<tr>
+<td><code>IS_APPROVED</code></td>
+<td><code>NAME_CONTRACT_STATUS == 'Approved'</code></td>
+<td>是否被批准</td>
+</tr>
+<tr>
+<td><code>IS_REFUSED</code></td>
+<td><code>NAME_CONTRACT_STATUS == 'Refused'</code></td>
+<td>是否被拒绝（内部信用信号）</td>
+</tr>
+<tr>
+<td><code>IS_CANCELED</code></td>
+<td><code>NAME_CONTRACT_STATUS == 'Canceled'</code></td>
+<td>客户主动取消</td>
+</tr>
+<tr>
+<td><code>DOWN_PAY_RATIO</code></td>
+<td><code>AMT_DOWN_PAYMENT / (AMT_CREDIT+1)</code></td>
+<td>首付比例，越高→自有资金越充足→风险越低</td>
+</tr>
+</tbody>
+</table>
+<p><strong>输出聚合特征</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>金融含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PREV_COUNT</code></td>
+<td>历史申请总笔数</td>
+</tr>
+<tr>
+<td><code>PREV_APPROVED/REFUSED/CANCELED_COUNT</code></td>
+<td>各结果绝对笔数</td>
+</tr>
+<tr>
+<td><code>PREV_APPROVED_RATE</code></td>
+<td>HC 内部信用认可度</td>
+</tr>
+<tr>
+<td><code>PREV_REFUSED_RATE</code></td>
+<td>HC 历史拒绝率，高→HC 长期认为该客户风险偏高（强负向特征）</td>
+</tr>
+<tr>
+<td><code>PREV_CREDIT_MEAN/MAX</code></td>
+<td>历史授信均值/最大值</td>
+</tr>
+<tr>
+<td><code>PREV_ANNUITY_MEAN</code></td>
+<td>历史平均年化还款额</td>
+</tr>
+<tr>
+<td><code>PREV_DOWN_PAY_RATIO</code></td>
+<td>平均首付比例</td>
+</tr>
+<tr>
+<td><code>PREV_CNT_PAYMENT_MEAN</code></td>
+<td>平均合同期数（月）</td>
+</tr>
+<tr>
+<td><code>PREV_DAYS_DECISION_MEAN</code></td>
+<td>平均决策距申请天数（越近0→越近期有申请）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_previous
+prev_feat = feat_previous(data[<span class="hljs-string">'previous'</span>])
+</div></code></pre>
+<hr>
+<h4 id="featcrossdf-pddataframe---pddataframe"><code>feat_cross(df: pd.DataFrame) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：在全表 merge 完成后执行，利用多张表的聚合结果构造复合风险信号特征。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>已合并所有子表聚合特征的宽表</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，追加交叉特征列（原地修改副本）</p>
+<p><strong>输出交叉特征</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>特征名</th>
+<th>公式</th>
+<th>业务逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BUREAU_DEBT_INCOME_RATIO</code></td>
+<td><code>BUREAU_DEBT_SUM / (AMT_INCOME_TOTAL+1)</code></td>
+<td>外部总负债/年收入，全口径杠杆率（比 CREDIT_INCOME_RATIO 更完整）</td>
+</tr>
+<tr>
+<td><code>REFUSED_RATE_CREDIT_CROSS</code></td>
+<td><code>PREV_REFUSED_RATE × CREDIT_INCOME_RATIO</code></td>
+<td>历史被拒 × 当前贷款压力，双重负向叠加</td>
+</tr>
+<tr>
+<td><code>CC_UTIL_BUREAU_DPD_CROSS</code></td>
+<td><code>CC_UTILIZATION_MEAN × BUREAU_BB_DPD_RATE_MEAN</code></td>
+<td>信用卡高利用率 × 外部逾期率，流动性紧张+不良习惯复合信号</td>
+</tr>
+<tr>
+<td><code>EMPLOYED_EXT2_CROSS</code></td>
+<td><code>DAYS_EMPLOYED_YEARS × EXT_SOURCE_2</code></td>
+<td>就业稳定 × 外部好评分，优质客群正向放大；反之高风险</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> feat_cross
+df = feat_cross(df_merged)
+</div></code></pre>
+<hr>
+<h4 id="buildfeaturesdata-dict---pddataframe"><code>build_features(data: dict) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：特征工程主入口，按顺序调用所有子函数，最终输出融合后的完整宽表。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td>dict</td>
+<td><code>load_all()</code> 的返回值（7张表的字典）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，shape=(307511, 214)，含 <code>SK_ID_CURR</code>、<code>TARGET</code> 及所有衍生特征</p>
+<p><strong>内部执行顺序</strong>：</p>
+<pre class="hljs"><code><div>1. clean_application(app)          → 主表清洗
+2. feat_application(app)           → 主表衍生特征
+3. feat_bureau(bureau, bureau_bal) → 外部征信聚合
+4. feat_installments(inst)         → 分期还款聚合
+5. feat_credit_card(cc)            → 信用卡行为聚合
+6. feat_pos(pos)                   → POS 行为聚合
+7. feat_previous(prev)             → 历史申请聚合
+8. 所有子表特征 left join 到主表
+9. feat_cross(df)                  → 跨表交叉特征
+10. encode_categoricals(df)        → 类别变量编码
+11. fill_missing(df)               → 缺失值填充
+</div></code></pre>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_engineering <span class="hljs-keyword">import</span> build_features
+df = build_features(data)   <span class="hljs-comment"># 耗时约 3~5 分钟，建议缓存到 features.pkl</span>
+df.to_pickle(<span class="hljs-string">'data/processed/features.pkl'</span>)
+</div></code></pre>
+<hr>
+<h3 id="25-srcfeatureselectionpy">2.5 <code>src/feature_selection.py</code></h3>
+<p><strong>模块职责</strong>：使用 LightGBM 5 折交叉验证评估全量特征重要性，筛选出 Top-N 特征供 WoE 编码使用。</p>
+<p><strong>依赖模块</strong>：<code>src/config</code>（<code>LGB_PARAMS</code>, <code>LGB_CV_FOLDS</code>, <code>LGB_EARLY_STOP</code>, <code>TARGET</code>, <code>ID_COL</code>, <code>MODEL_DIR</code>, <code>FEATURE_DIR</code>）</p>
+<p><strong>对外提供的函数</strong>：<code>run_lgb_cv(df)</code>、<code>select_features(imp_df, df, top_n, threshold)</code></p>
+<hr>
+<h4 id="runlgbcvdf-pddataframe---tuple"><code>run_lgb_cv(df: pd.DataFrame) -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：对全量特征做 LightGBM 5 折交叉验证，返回 OOF 预测值和特征重要性排名。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td><code>build_features</code> 输出的完整特征宽表（含 <code>TARGET</code>）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>返回项</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oof_pred</code></td>
+<td>np.ndarray</td>
+<td>shape=(307511,)，OOF 预测违约概率</td>
+</tr>
+<tr>
+<td><code>imp_df</code></td>
+<td>pd.DataFrame</td>
+<td>各特征在 5 折中的平均重要性，按降序排列，列：<code>[feature, importance]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>副作用（保存文件）</strong>：</p>
+<ul>
+<li><code>outputs/models/lgb_fold{1-5}.pkl</code>：各折 LGB 模型</li>
+<li><code>outputs/features/lgb_importance.csv</code>：特征重要性排名</li>
+</ul>
+<p><strong>业务逻辑说明</strong>：此步骤不追求极致 AUC，目的是获得<strong>稳定的特征重要性排名</strong>。通过 5 折取均值、强正则、高 <code>min_child_samples</code> 抑制噪声特征&quot;虚高&quot;。实际 OOF AUC=0.7881。</p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_selection <span class="hljs-keyword">import</span> run_lgb_cv
+oof_pred, imp_df = run_lgb_cv(df)
+print(imp_df.head(<span class="hljs-number">20</span>))
+</div></code></pre>
+<hr>
+<h4 id="selectfeaturesimpdf-df-topnnone-thresholdnone---list"><code>select_features(imp_df, df, top_n=None, threshold=None) -&gt; list</code></h4>
+<p><strong>功能描述</strong>：根据 LGB 重要性排名筛选特征，优先使用 <code>top_n</code>。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>imp_df</code></td>
+<td>pd.DataFrame</td>
+<td><code>run_lgb_cv</code> 返回的特征重要性表</td>
+</tr>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>特征宽表（用于确认特征存在性）</td>
+</tr>
+<tr>
+<td><code>top_n</code></td>
+<td>int | None</td>
+<td>取重要性前 N 名，优先使用（默认 <code>TARGET_FEATURE_NUM=40</code>）</td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td>float | None</td>
+<td>按重要性绝对值筛选（当 <code>top_n=None</code> 时生效）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>list</code>，筛选后的特征名列表（40 个）</p>
+<p><strong>副作用</strong>：保存 <code>outputs/features/selected_features.csv</code></p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.feature_selection <span class="hljs-keyword">import</span> select_features
+selected = select_features(imp_df, df, top_n=<span class="hljs-number">40</span>)
+<span class="hljs-comment"># ['CREDIT_TERM', 'EXT_SOURCE_MEAN', 'POS_PROGRESS_MEAN', ...]</span>
+</div></code></pre>
+<hr>
+<h3 id="26-srcwoeencodingpy">2.6 <code>src/woe_encoding.py</code></h3>
+<p><strong>模块职责</strong>：对 LGB 筛选后的特征做 WoE/IV 计算、单调性约束、IV 过滤和编码转换，为 LR 建模准备线性可分输入。</p>
+<p><strong>依赖模块</strong>：<code>src/config</code>（<code>FEATURE_DIR</code>, <code>SCORECARD_DIR</code>, <code>TARGET</code>）</p>
+<p><strong>对外提供的函数</strong>：<code>bin_numeric</code>、<code>bin_categorical</code>、<code>calculate_woe_iv</code>、<code>enforce_monotone</code>、<code>fit_woe</code>、<code>transform_woe</code>、<code>save_woe</code>、<code>load_woe</code>、<code>run_woe_encoding</code></p>
+<p><strong>关键常量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IV_THRESHOLD</code></td>
+<td>0.02</td>
+<td>低于此值视为无预测力，剔除</td>
+</tr>
+<tr>
+<td><code>MAX_BINS</code></td>
+<td>10</td>
+<td>数值型最大等频分箱数</td>
+</tr>
+<tr>
+<td><code>MIN_BIN_RATE</code></td>
+<td>0.05</td>
+<td>单箱最小样本占比（防止 WoE 无穷大）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="binnumericx-y-maxbins10-minbinrate005---npndarray"><code>bin_numeric(x, y, max_bins=10, min_bin_rate=0.05) -&gt; np.ndarray</code></h4>
+<p><strong>功能描述</strong>：对数值型特征做等频分箱，迭代合并过小箱/纯好/纯坏箱，返回分箱边界数组。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>pd.Series</td>
+<td>特征列</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>pd.Series</td>
+<td>TARGET 列</td>
+</tr>
+<tr>
+<td><code>max_bins</code></td>
+<td>int</td>
+<td>最大分箱数，默认 10</td>
+</tr>
+<tr>
+<td><code>min_bin_rate</code></td>
+<td>float</td>
+<td>单箱最小样本占比，默认 0.05</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>np.ndarray</code>，分箱边界（首尾为 <code>-inf</code>/<code>+inf</code>）</p>
+<p><strong>业务逻辑说明</strong>：等频分箱保证每箱有足够统计量。合并条件：① 箱样本占比 &lt; <code>min_bin_rate</code>；② 纯好人箱；③ 纯坏人箱。以上三种情况均无法计算有效 WoE（分母为0）。</p>
+<hr>
+<h4 id="bincategoricalx-y---dict"><code>bin_categorical(x, y) -&gt; dict</code></h4>
+<p><strong>功能描述</strong>：对类别型特征统计各类别频率，将低频类别（&lt;<code>MIN_BIN_RATE</code>）合并为 <code>&quot;OTHER&quot;</code>。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>pd.Series</td>
+<td>类别型特征列</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>pd.Series</td>
+<td>TARGET 列</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>dict</code>，<code>{原始类别: 合并后标签}</code>，低频类均映射到 <code>&quot;OTHER&quot;</code></p>
+<hr>
+<h4 id="calculatewoeivx-y-binsnone-catmapnone-iscategoricalfalse---pddataframe"><code>calculate_woe_iv(x, y, bins=None, cat_map=None, is_categorical=False) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：给定分箱方案，计算每个箱的 WoE 和 IV，缺失值单独作为 <code>NaN</code> 箱处理。</p>
+<p><strong>WoE / IV 公式</strong>：</p>
+<p>$$\text{WoE}_i = \ln\left(\frac{\text{好人}_i / \text{总好人}}{\text{坏人}_i / \text{总坏人}}\right)$$</p>
+<p>$$\text{IV}_i = \left(\frac{\text{好人}_i}{\text{总好人}} - \frac{\text{坏人}_i}{\text{总坏人}}\right) \times \text{WoE}_i$$</p>
+<p>$$\text{总IV} = \sum_i \text{IV}_i \quad (\text{NaN 箱不计入})$$</p>
+<p><strong>WoE 业务含义</strong>：</p>
+<ul>
+<li><code>WoE &gt; 0</code>：该箱好人占比 &gt; 坏人占比（低风险区间）</li>
+<li><code>WoE &lt; 0</code>：该箱坏人占比 &gt; 好人占比（高风险区间）</li>
+<li>绝对值越大，该箱区分度越强</li>
+</ul>
+<blockquote>
+<p>使用 Laplace 平滑（加 0.5）防止 0/0 问题。</p>
+</blockquote>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，列：<code>[bin_label, count, bad, good, bad_rate, bad_pct, good_pct, woe, iv]</code></p>
+<hr>
+<h4 id="enforcemonotonex-y-bins---npndarray"><code>enforce_monotone(x, y, bins) -&gt; np.ndarray</code></h4>
+<p><strong>功能描述</strong>：通过逐步合并相邻分箱来强制 WoE 序列单调（递增或递减）。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>pd.Series</td>
+<td>特征列</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>pd.Series</td>
+<td>TARGET 列</td>
+</tr>
+<tr>
+<td><code>bins</code></td>
+<td>np.ndarray</td>
+<td><code>bin_numeric</code> 返回的初始边界</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>np.ndarray</code>，满足单调性的最终分箱边界</p>
+<p><strong>业务逻辑说明</strong>：监管/业务合规要求——特征与违约概率的关系必须单调，否则评分卡在某些分段的逻辑会自相矛盾（如&quot;收入越高违约率先降后升&quot;是无法向业务解释的）。算法找出第一个违反主方向的相邻箱对并合并，迭代直到满足单调。</p>
+<hr>
+<h4 id="fitwoedf-featurecols-targetcoltarget---tuple"><code>fit_woe(df, feature_cols, target_col=TARGET) -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：对所有选定特征逐一拟合 WoE 编码方案，输出映射字典和 IV 汇总表。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>含特征和 TARGET 的完整宽表</td>
+</tr>
+<tr>
+<td><code>feature_cols</code></td>
+<td>list</td>
+<td>LGB 筛选后的特征列表（40个）</td>
+</tr>
+<tr>
+<td><code>target_col</code></td>
+<td>str</td>
+<td>目标变量列名，默认 <code>'TARGET'</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>返回项</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td><code>{特征名: woe_df}</code>，每个特征的分箱→WoE映射表</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td>列：<code>[feature, iv, n_bins, keep]</code>，<code>keep=True</code> 表示 IV≥0.02</td>
+</tr>
+</tbody>
+</table>
+<p><strong>处理流程</strong>（每个特征）：</p>
+<pre class="hljs"><code><div>判断类型（数值/类别）
+  ↓
+数值型：bin_numeric → enforce_monotone → calculate_woe_iv
+类别型：bin_categorical → calculate_woe_iv
+  ↓
+累加 IV，标记 keep（IV &gt;= 0.02）
+</div></code></pre>
+<p>实际结果：40 个候选特征 → 保留 28 个（IV&lt;0.02 的 12 个剔除）</p>
+<hr>
+<h4 id="transformwoedf-woemap-ivsummary---pddataframe"><code>transform_woe(df, woe_map, iv_summary) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：将原始特征替换为 WoE 值，返回 LR 可直接使用的编码矩阵。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td>原始特征宽表</td>
+</tr>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td><code>fit_woe</code> 的返回值</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td><code>fit_woe</code> 的返回值，用于过滤 <code>keep=False</code> 的特征</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，shape=(307511, 30)，列名格式为 <code>{原始特征名}_WOE</code>，另含 <code>SK_ID_CURR</code>、<code>TARGET</code></p>
+<p><strong>业务逻辑说明</strong>：WoE 编码后每个箱用一个实数表示，与 log-odds 天然线性，满足 LR 的线性假设。未知类别（生产新类别）自动 fallback 到 <code>OTHER</code> 箱的 WoE；缺失值 fallback 到 <code>NaN</code> 箱的 WoE，不会产生新缺失。</p>
+<hr>
+<h4 id="savewoewoemap-ivsummary---none--loadwoe---tuple"><code>save_woe(woe_map, iv_summary) -&gt; None</code> / <code>load_woe() -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：将 WoE 映射表和 IV 汇总持久化到 CSV；<code>load_woe</code> 反向重建字典（推理/复盘用）。</p>
+<p><strong>输出文件</strong>：</p>
+<ul>
+<li><code>outputs/features/woe_map.csv</code></li>
+<li><code>outputs/features/iv_summary.csv</code></li>
+</ul>
+<hr>
+<h4 id="runwoeencodingdf-selectedfeatures---tuple"><code>run_woe_encoding(df, selected_features) -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：WoE 编码完整流程入口（<code>main.py</code> Step 5 调用）。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td>pd.DataFrame</td>
+<td><code>build_features</code> 输出的宽表</td>
+</tr>
+<tr>
+<td><code>selected_features</code></td>
+<td>list</td>
+<td><code>select_features</code> 返回的 40 个特征名</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>返回项</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df_woe</code></td>
+<td>pd.DataFrame</td>
+<td>WoE 编码矩阵（307511 × 30）</td>
+</tr>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td>分箱映射字典（供 <code>scorecard.py</code> 使用）</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td>IV 汇总表（供 <code>model_lr.py</code> 使用）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.woe_encoding <span class="hljs-keyword">import</span> run_woe_encoding
+df_woe, woe_map, iv_summary = run_woe_encoding(df, selected_features)
+</div></code></pre>
+<hr>
+<h3 id="27-srcmodellrpy">2.7 <code>src/model_lr.py</code></h3>
+<p><strong>模块职责</strong>：在 WoE 编码矩阵上完成共线性剔除、LR 5 折交叉验证训练、系数稳定性评估和方向检验。</p>
+<p><strong>依赖模块</strong>：<code>src/config</code>（<code>TARGET</code>, <code>ID_COL</code>, <code>CORRELATION_THRESHOLD</code>, <code>LGB_CV_FOLDS</code>, <code>MODEL_DIR</code>, <code>FEATURE_DIR</code>）</p>
+<p><strong>对外提供的函数</strong>：<code>remove_collinear</code>、<code>calc_ks</code>、<code>train_lr_cv</code>、<code>build_coef_table</code>、<code>run_lr_modeling</code></p>
+<hr>
+<h4 id="removecollineardfwoe-ivsummary-threshold085---list"><code>remove_collinear(df_woe, iv_summary, threshold=0.85) -&gt; list</code></h4>
+<p><strong>功能描述</strong>：基于 Pearson 相关系数矩阵剔除 WoE 特征中的共线性对，保留 IV 更高者。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df_woe</code></td>
+<td>pd.DataFrame</td>
+<td>WoE 编码矩阵</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td>IV 汇总表（用于比较保留哪个）</td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td>float</td>
+<td>相关系数阈值，默认 0.85</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>list</code>，共线性处理后保留的 WoE 特征列名（实际：28→23个）</p>
+<p><strong>业务逻辑说明</strong>：LR 对多重共线性敏感——相关系数过高的两个特征会导致系数符号反转、标准误爆炸，破坏评分卡的业务可解释性。<code>0.85</code> 是行业经验阈值，允许适度相关（如 <code>DAYS_BIRTH</code> 和 <code>AGE_YEARS</code> 完全相关 corr=1.0，必须剔除其一）。</p>
+<p><strong>副作用</strong>：保存 <code>outputs/features/lr_features.csv</code></p>
+<hr>
+<h4 id="calcksytrue-yprob---float"><code>calc_ks(y_true, y_prob) -&gt; float</code></h4>
+<p><strong>功能描述</strong>：计算 KS 统计量（Kolmogorov-Smirnov）。</p>
+<p><strong>公式</strong>：</p>
+<p>$$\text{KS} = \max_t \left| \text{TPR}(t) - \text{FPR}(t) \right| = \max_t \left( \text{坏人累积占比}(t) - \text{好人累积占比}(t) \right)$$</p>
+<p><strong>KS 行业参考标准</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>KS 范围</th>
+<th>评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 0.20</td>
+<td>较弱，需重审特征</td>
+</tr>
+<tr>
+<td>0.20 ~ 0.30</td>
+<td>可接受</td>
+</tr>
+<tr>
+<td>0.30 ~ 0.40</td>
+<td>良好 ✓</td>
+</tr>
+<tr>
+<td>&gt; 0.40</td>
+<td>优秀</td>
+</tr>
+<tr>
+<td>&gt; 0.75</td>
+<td>可能过拟合</td>
+</tr>
+</tbody>
+</table>
+<p>本项目 OOF KS = <strong>0.3663</strong>（良好）</p>
+<hr>
+<h4 id="trainlrcvdfwoe-featurecols---tuple"><code>train_lr_cv(df_woe, feature_cols) -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：LR 5 折交叉验证训练，每折返回 <code>(StandardScaler, LogisticRegression)</code> 元组并保存到磁盘。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df_woe</code></td>
+<td>pd.DataFrame</td>
+<td>WoE 编码矩阵（含 TARGET）</td>
+</tr>
+<tr>
+<td><code>feature_cols</code></td>
+<td>list</td>
+<td>共线性处理后保留的 WoE 特征列</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>返回项</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oof_pred</code></td>
+<td>np.ndarray</td>
+<td>OOF 预测违约概率</td>
+</tr>
+<tr>
+<td><code>models</code></td>
+<td>list</td>
+<td>5 个 <code>(scaler, lr)</code> 元组</td>
+</tr>
+<tr>
+<td><code>cv_metrics</code></td>
+<td>pd.DataFrame</td>
+<td>各折 AUC/KS/Gini 及 OOF 汇总</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C</code></td>
+<td>0.1</td>
+<td>C=1/λ，值越小正则越强；评分卡偏保守，防系数过大</td>
+</tr>
+<tr>
+<td><code>solver</code></td>
+<td><code>'lbfgs'</code></td>
+<td>拟牛顿法，适合中等规模（&lt;30万×50特征），支持 L2 正则</td>
+</tr>
+<tr>
+<td><code>class_weight</code></td>
+<td><code>'balanced'</code></td>
+<td>自动处理 1:11 样本不平衡，等价于 LGB 的 <code>scale_pos_weight=11</code></td>
+</tr>
+<tr>
+<td><code>StandardScaler</code></td>
+<td>训练集 fit</td>
+<td>标准化后系数绝对值可直接比较各特征影响力；避免数据泄露</td>
+</tr>
+</tbody>
+</table>
+<p><strong>副作用</strong>：保存 <code>outputs/models/lr_fold{1-5}.pkl</code>、<code>outputs/models/lr_cv_metrics.csv</code></p>
+<hr>
+<h4 id="buildcoeftablemodels-featurecols-ivsummary---pddataframe"><code>build_coef_table(models, feature_cols, iv_summary) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：汇总各折 LR 系数，计算稳定性指标，执行方向检验，提取截距行。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>models</code></td>
+<td>list</td>
+<td><code>train_lr_cv</code> 返回的 <code>(scaler, lr)</code> 列表</td>
+</tr>
+<tr>
+<td><code>feature_cols</code></td>
+<td>list</td>
+<td>WoE 特征列名</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td>IV 汇总（用于排序和附加 IV 信息）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，列：<code>[feature, coef_mean, coef_std, coef_min, coef_max, coef_fold1~5, iv, direction_ok, direction, coef_cv]</code>，末尾含 <code>_INTERCEPT</code> 行</p>
+<p><strong>方向检验原则</strong>：</p>
+<blockquote>
+<p>WoE 编码后，LR 系数理论上应全为负数：</p>
+<ul>
+<li>WoE 越高 → 好人比例越高 → 违约概率越低</li>
+<li>因此：<code>log-odds = β₀ + β₁×WoE</code> 中，<code>β₁ &lt; 0</code> 才符合业务逻辑</li>
+<li>若 <code>β₁ &gt; 0</code>，说明该特征存在 WoE 单调性问题或共线性残留</li>
+</ul>
+</blockquote>
+<p>本项目发现 3 个方向异常特征：<code>EXT_SOURCE_2_AGE_WOE</code>（与 <code>EXT_SOURCE_2</code> 高度共线）、<code>DAYS_LAST_PHONE_CHANGE_WOE</code>（系数≈0）、<code>AMT_GOODS_PRICE_WOE</code>（轻微异常）。</p>
+<p><strong>截距处理</strong>：末尾附加 <code>_INTERCEPT</code> 行，存储 5 折截距均值，供 <code>build_scorecard_table</code> 均摊到每个特征的基础分。</p>
+<p><strong>副作用</strong>：保存 <code>outputs/models/lr_coef_table.csv</code></p>
+<hr>
+<h4 id="runlrmodelingdfwoe-ivsummary---tuple"><code>run_lr_modeling(df_woe, iv_summary) -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：LR 建模完整流程入口（<code>main.py</code> Step 6 调用）。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df_woe</code></td>
+<td>pd.DataFrame</td>
+<td><code>run_woe_encoding</code> 返回的 WoE 矩阵</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td><code>run_woe_encoding</code> 返回的 IV 汇总</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>返回项</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>models</code></td>
+<td>list</td>
+<td>5 折 <code>(scaler, lr)</code> 元组列表（供评分卡使用）</td>
+</tr>
+<tr>
+<td><code>feature_cols</code></td>
+<td>list</td>
+<td>最终进入模型的 23 个 WoE 特征列名</td>
+</tr>
+<tr>
+<td><code>coef_df</code></td>
+<td>pd.DataFrame</td>
+<td>系数稳定性表（含 <code>_INTERCEPT</code> 行）</td>
+</tr>
+<tr>
+<td><code>cv_metrics</code></td>
+<td>pd.DataFrame</td>
+<td>各折 AUC/KS/Gini</td>
+</tr>
+</tbody>
+</table>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.model_lr <span class="hljs-keyword">import</span> run_lr_modeling
+models, lr_features, coef_df, cv_metrics = run_lr_modeling(df_woe, iv_summary)
+</div></code></pre>
+<hr>
+<h3 id="28-srcscorecardpy">2.8 <code>src/scorecard.py</code></h3>
+<p><strong>模块职责</strong>：将 LR 系数和 WoE 映射表转换为标准评分卡格式，提供单人评分函数和批量校验。</p>
+<p><strong>依赖模块</strong>：<code>src/config</code>（<code>PDO</code>, <code>BASE_SCORE</code>, <code>BASE_ODDS</code>, <code>SCORECARD_DIR</code>, <code>TARGET</code>, <code>ID_COL</code>）</p>
+<p><strong>对外提供的函数</strong>：<code>calc_scorecard_params</code>、<code>build_scorecard_table</code>、<code>score_single</code>、<code>validate_scorecard</code>、<code>save_scorecard</code>、<code>print_scorecard</code>、<code>run_scorecard</code></p>
+<hr>
+<h4 id="calcscorecardparamspdo20-basescore600-baseodds50---tuple"><code>calc_scorecard_params(pdo=20, base_score=600, base_odds=50) -&gt; tuple</code></h4>
+<p><strong>功能描述</strong>：计算评分卡转换所需的 <code>factor</code> 和 <code>offset</code> 两个核心参数。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>默认值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pdo</code></td>
+<td>float</td>
+<td>20</td>
+<td>Points to Double Odds：好坏比每翻倍，分值增加 PDO 分</td>
+</tr>
+<tr>
+<td><code>base_score</code></td>
+<td>float</td>
+<td>600</td>
+<td>基准分（好坏比等于 <code>base_odds</code> 时对应的分值）</td>
+</tr>
+<tr>
+<td><code>base_odds</code></td>
+<td>float</td>
+<td>50</td>
+<td>基准好坏比（好人数/坏人数）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>(factor, offset)</code>，均为 float</p>
+<p><strong>完整推导过程</strong>：</p>
+<p>设评分卡得分公式为：</p>
+<p>$$\text{score} = \text{offset} - \text{factor} \times \ln(\text{odds})$$</p>
+<p>其中 $\text{odds} = P(\text{好人}) / P(\text{坏人})$，与 LR 的 log-odds 对应。</p>
+<p><strong>由 PDO 定义</strong>（好坏比翻倍时分数增加 PDO 分）：</p>
+<p>$$\text{score} + \text{PDO} = \text{offset} - \text{factor} \times \ln(2 \times \text{odds})$$</p>
+<p>两式相减：</p>
+<p>$$\text{PDO} = \text{factor} \times \ln 2 \implies \boxed{\text{factor} = \frac{\text{PDO}}{\ln 2}}$$</p>
+<p><strong>由基准分定义</strong>（好坏比为 <code>base_odds</code> 时分值为 <code>base_score</code>）：</p>
+<p>$$\text{base_score} = \text{offset} - \text{factor} \times \ln(\text{base_odds})$$</p>
+<p>$$\implies \boxed{\text{offset} = \text{base_score} + \text{factor} \times \ln(\text{base_odds})}$$</p>
+<p><strong>本项目计算结果</strong>：</p>
+<p>$$\text{factor} = \frac{20}{\ln 2} \approx 28.8539, \quad \text{offset} = 600 + 28.8539 \times \ln 50 \approx 712.8771$$</p>
+<hr>
+<h4 id="buildscorecardtablewoemap-coefdf-factor-offset---pddataframe"><code>build_scorecard_table(woe_map, coef_df, factor, offset) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：将 LR 系数 × WoE 映射表转换为每个分箱的标准得分。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td><code>fit_woe</code> 返回的分箱映射字典</td>
+</tr>
+<tr>
+<td><code>coef_df</code></td>
+<td>pd.DataFrame</td>
+<td><code>build_coef_table</code> 返回的系数表（含 <code>_INTERCEPT</code> 行）</td>
+</tr>
+<tr>
+<td><code>factor</code></td>
+<td>float</td>
+<td><code>calc_scorecard_params</code> 返回值</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>float</td>
+<td><code>calc_scorecard_params</code> 返回值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，列：<code>[feature, bin_label, woe, coef, score, count, bad_rate, is_nan_bin]</code></p>
+<p><strong>每箱得分公式</strong>：</p>
+<p>LR 模型展开：</p>
+<p>$$\log\text{-odds} = \beta_0 + \sum_{j=1}^{n} \beta_j \times \text{WoE}_{j}$$</p>
+<p>将截距均摊到每个特征（每个特征分担 $\beta_0 / n$ 的基础分）：</p>
+<p>$$\boxed{\text{score}<em>{ji} = -\left(\beta_j \times \text{WoE}</em>{ji} + \frac{\beta_0}{n}\right) \times \text{factor} + \frac{\text{offset}}{n}}$$</p>
+<p><strong>负号的来源</strong>：score 越高 → odds 越大 → 好人占比越高 → 违约概率越低，而 LR 中 log-odds 越大表示违约概率越低，因此需要负号对齐方向。</p>
+<p><strong>总分</strong>：</p>
+<p>$$\text{total_score} = \sum_{j=1}^{n} \text{score}_{j,\text{bin}(j)} = -\text{factor} \times \log\text{-odds} + \text{offset}$$</p>
+<hr>
+<h4 id="scoresingleapplicant-scorecard-woemap---dict"><code>score_single(applicant, scorecard, woe_map) -&gt; dict</code></h4>
+<p><strong>功能描述</strong>：给定单个申请人的原始特征字典，查评分卡返回总分和各特征明细。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applicant</code></td>
+<td>dict</td>
+<td><code>{原始特征名: 特征值}</code>（不含 <code>_WOE</code> 后缀）</td>
+</tr>
+<tr>
+<td><code>scorecard</code></td>
+<td>pd.DataFrame</td>
+<td><code>build_scorecard_table</code> 生成的评分卡表</td>
+</tr>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td>WoE 映射字典（用于查找分箱）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：</p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-string">'total_score'</span>: <span class="hljs-number">735.5</span>,          <span class="hljs-comment"># 总分（越高越像好人）</span>
+    <span class="hljs-string">'details'</span>: [
+        {<span class="hljs-string">'feature'</span>: <span class="hljs-string">'EXT_SOURCE_MEAN'</span>, <span class="hljs-string">'raw_value'</span>: <span class="hljs-number">0.65</span>,
+         <span class="hljs-string">'bin_label'</span>: <span class="hljs-string">'(0.644, 0.692]'</span>, <span class="hljs-string">'score'</span>: <span class="hljs-number">44.9</span>},
+        ...
+    ]
+}
+</div></code></pre>
+<p><strong>分箱查找规则</strong>：</p>
+<ul>
+<li><code>None</code> 或 <code>NaN</code> → <code>'NaN'</code> 箱</li>
+<li>类别型 → 直接匹配 <code>bin_label</code>；未知类别 → <code>'OTHER'</code> 箱</li>
+<li>数值型 → 解析区间边界，用 <code>pd.cut</code> 定位所在区间</li>
+</ul>
+<hr>
+<h4 id="validatescorecardscorecard-dfraw-woemap---pddataframe"><code>validate_scorecard(scorecard, df_raw, woe_map) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：批量评分（最多 5000 行采样），校验评分卡方向性和分段违约率单调性。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scorecard</code></td>
+<td>pd.DataFrame</td>
+<td>评分卡表</td>
+</tr>
+<tr>
+<td><code>df_raw</code></td>
+<td>pd.DataFrame</td>
+<td>含原始特征和 TARGET 的宽表</td>
+</tr>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td>WoE 映射字典</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，列：<code>[score, TARGET]</code></p>
+<p><strong>校验项目</strong>：</p>
+<ol>
+<li>分数分布（均值/标准差/min/max）</li>
+<li>好坏人均分对比（好人均分 &gt; 坏人均分 = 方向正确）</li>
+<li>10 分位分段违约率（应单调递减）</li>
+</ol>
+<p>本项目结果：好人均分 729.5，坏人均分 716.9，差值 12.7 分，方向 ✅</p>
+<blockquote>
+<p><code>MAX_VALIDATE_ROWS=5000</code> 采样限制，避免 30 万行 Python 逐行循环耗时数小时。</p>
+</blockquote>
+<hr>
+<h4 id="runscorecarddfraw-woemap-coefdf-ivsummary-validatetrue---pddataframe"><code>run_scorecard(df_raw, woe_map, coef_df, iv_summary, validate=True) -&gt; pd.DataFrame</code></h4>
+<p><strong>功能描述</strong>：评分卡生成完整流程入口（<code>main.py</code> Step 7 调用）。</p>
+<p><strong>参数说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df_raw</code></td>
+<td>pd.DataFrame</td>
+<td>含原始特征和 TARGET 的宽表（用于校验）</td>
+</tr>
+<tr>
+<td><code>woe_map</code></td>
+<td>dict</td>
+<td><code>run_woe_encoding</code> 返回值</td>
+</tr>
+<tr>
+<td><code>coef_df</code></td>
+<td>pd.DataFrame</td>
+<td><code>run_lr_modeling</code> 返回值</td>
+</tr>
+<tr>
+<td><code>iv_summary</code></td>
+<td>pd.DataFrame</td>
+<td><code>run_woe_encoding</code> 返回值</td>
+</tr>
+<tr>
+<td><code>validate</code></td>
+<td>bool</td>
+<td>是否执行批量校验，数据量大时可设 <code>False</code> 跳过</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回值</strong>：<code>pd.DataFrame</code>，标准评分卡（156 条分箱记录）</p>
+<p><strong>副作用</strong>：保存 <code>outputs/scorecard/scorecard.csv</code> 和 <code>outputs/scorecard/score_dist.csv</code></p>
+<p><strong>调用示例</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> src.scorecard <span class="hljs-keyword">import</span> run_scorecard
+scorecard = run_scorecard(
+    df_raw=df, woe_map=woe_map,
+    coef_df=coef_df, iv_summary=iv_summary,
+    validate=<span class="hljs-literal">True</span>
+)
+</div></code></pre>
+<hr>
+<h3 id="29-mainpy">2.9 <code>main.py</code></h3>
+<p><strong>模块职责</strong>：全流程编排入口，按顺序调用 7 个步骤，支持特征工程缓存（第二次运行跳过重建）。</p>
+<p><strong>依赖模块</strong>：全部 <code>src/</code> 模块</p>
+<p><strong>运行方式</strong>：</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> /Users/sanchuankanzi/Documents/code/home_credit_scorecard
+python main.py
+<span class="hljs-comment"># 后台运行（推荐，耗时约30~60分钟）：</span>
+nohup python -u main.py &gt; outputs/run_log.txt 2&gt;&amp;1 &amp;
+</div></code></pre>
+<hr>
+<h2 id="3-%E5%AE%8C%E6%95%B4%E8%B0%83%E7%94%A8%E9%93%BE%E8%B7%AF">3. 完整调用链路</h2>
+<pre class="hljs"><code><div>main()
+│
+├── Step 1  load_all()
+│           └── load_data(name) × 7          →  data: dict{7 DataFrames}
+│
+├── Step 2  build_features(data)              →  df: (307511, 214)
+│           ├── clean_application(app)
+│           ├── feat_application(app)
+│           ├── feat_bureau(bureau, bureau_bal)
+│           ├── feat_installments(inst)
+│           ├── feat_credit_card(cc)
+│           ├── feat_pos(pos)
+│           ├── feat_previous(prev)
+│           ├── [left join 所有子表到主表]
+│           ├── feat_cross(df)
+│           ├── encode_categoricals(df)
+│           └── fill_missing(df)
+│           ↓ 缓存到 data/processed/features.pkl
+│
+├── Step 3  run_lgb_cv(df)                   →  oof_pred, imp_df
+│           └── LGBMClassifier × 5折
+│               ├── 每折保存 lgb_fold{i}.pkl
+│               └── 保存 lgb_importance.csv
+│
+├── Step 4  select_features(imp_df, df, top_n=40)  →  selected: list[40]
+│           └── 保存 selected_features.csv
+│
+├── Step 5  run_woe_encoding(df, selected)   →  df_woe, woe_map, iv_summary
+│           ├── fit_woe(df, selected)
+│           │   ├── bin_numeric / bin_categorical（每个特征）
+│           │   ├── enforce_monotone（数值型）
+│           │   └── calculate_woe_iv
+│           ├── save_woe → woe_map.csv, iv_summary.csv
+│           └── transform_woe → df_woe: (307511, 30)
+│           [40特征 → IV&lt;0.02剔除12个 → 保留28个]
+│
+├── Step 6  run_lr_modeling(df_woe, iv_summary)  →  models, lr_features, coef_df, cv_metrics
+│           ├── remove_collinear → 28→23个特征，保存 lr_features.csv
+│           ├── train_lr_cv → 5折 (scaler, lr)，保存 lr_fold{i}.pkl, lr_cv_metrics.csv
+│           └── build_coef_table → 系数表+截距行，保存 lr_coef_table.csv
+│
+└── Step 7  run_scorecard(df, woe_map, coef_df, iv_summary)  →  scorecard
+            ├── calc_scorecard_params() → factor=28.85, offset=712.88
+            ├── build_scorecard_table → 156条分箱得分记录
+            ├── validate_scorecard（采样5000行校验）
+            │   └── score_single × 5000
+            ├── save_scorecard → scorecard.csv, score_dist.csv
+            └── print_scorecard（打印前5个特征）
+</div></code></pre>
+<p><strong>数据流转一览</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>输入</th>
+<th>输出</th>
+<th>shape 变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 数据加载</td>
+<td>7个CSV</td>
+<td><code>data</code> dict</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2 特征工程</td>
+<td><code>data</code></td>
+<td><code>df</code></td>
+<td>→ (307511, 214)</td>
+</tr>
+<tr>
+<td>3 LGB筛选</td>
+<td><code>df</code></td>
+<td><code>imp_df</code></td>
+<td>212特征排序</td>
+</tr>
+<tr>
+<td>4 Top-N筛选</td>
+<td><code>imp_df</code></td>
+<td><code>selected</code></td>
+<td>212 → 40</td>
+</tr>
+<tr>
+<td>5 WoE编码</td>
+<td><code>df</code> + <code>selected</code></td>
+<td><code>df_woe</code></td>
+<td>40 → 28 → (307511, 30)</td>
+</tr>
+<tr>
+<td>6 LR建模</td>
+<td><code>df_woe</code></td>
+<td><code>models</code>, <code>coef_df</code></td>
+<td>28 → 23特征</td>
+</tr>
+<tr>
+<td>7 评分卡</td>
+<td><code>woe_map</code>+<code>coef_df</code></td>
+<td><code>scorecard</code></td>
+<td>23特征 × N箱 = 156条</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E">4. 输入输出文件说明</h2>
+<h3 id="41-%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6dataraw">4.1 输入文件（<code>data/raw/</code>）</h3>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>主键</th>
+<th>shape</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>application_train.csv</code></td>
+<td><code>SK_ID_CURR</code></td>
+<td>(307511, 122)</td>
+<td>主表：申请人基本信息、贷款信息、目标变量</td>
+</tr>
+<tr>
+<td><code>bureau.csv</code></td>
+<td><code>SK_ID_BUREAU</code></td>
+<td>(1716428, 17)</td>
+<td>外部征信：每笔外部贷款的基本信息</td>
+</tr>
+<tr>
+<td><code>bureau_balance.csv</code></td>
+<td><code>SK_ID_BUREAU</code></td>
+<td>(27299925, 3)</td>
+<td>外部征信月度还款状态快照</td>
+</tr>
+<tr>
+<td><code>previous_application.csv</code></td>
+<td><code>SK_ID_PREV</code></td>
+<td>(1670214, 37)</td>
+<td>HC 历史申请记录</td>
+</tr>
+<tr>
+<td><code>POS_CASH_balance.csv</code></td>
+<td><code>SK_ID_PREV</code></td>
+<td>(10001358, 8)</td>
+<td>HC POS/现金贷月度还款快照</td>
+</tr>
+<tr>
+<td><code>credit_card_balance.csv</code></td>
+<td><code>SK_ID_PREV</code></td>
+<td>(3840312, 23)</td>
+<td>HC 信用卡月度账单快照</td>
+</tr>
+<tr>
+<td><code>installments_payments.csv</code></td>
+<td><code>SK_ID_PREV</code></td>
+<td>(13605401, 8)</td>
+<td>HC 分期还款流水</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-%E4%B8%AD%E9%97%B4%E4%BA%A7%E7%89%A9dataprocessed">4.2 中间产物（<code>data/processed/</code>）</h3>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>格式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>features.pkl</code></td>
+<td>pickle</td>
+<td><code>build_features</code> 输出的完整特征宽表（307511×214），用于避免重复运行特征工程</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6outputs">4.3 输出文件（<code>outputs/</code>）</h3>
+<h4 id="outputsmodels"><code>outputs/models/</code></h4>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lgb_fold{1-5}.pkl</code></td>
+<td>LightGBM 各折模型（joblib 格式）</td>
+</tr>
+<tr>
+<td><code>lr_fold{1-5}.pkl</code></td>
+<td>LR 各折 <code>(StandardScaler, LogisticRegression)</code> 元组</td>
+</tr>
+<tr>
+<td><code>lr_cv_metrics.csv</code></td>
+<td>LR 各折 AUC/KS/Gini + OOF 汇总</td>
+</tr>
+<tr>
+<td><code>lr_coef_table.csv</code></td>
+<td>LR 系数稳定性表（含各折系数、均值、方向检验、<code>_INTERCEPT</code> 行）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputsfeatures"><code>outputs/features/</code></h4>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lgb_importance.csv</code></td>
+<td>LGB 特征重要性排名（feature, importance）</td>
+</tr>
+<tr>
+<td><code>selected_features.csv</code></td>
+<td>LGB 筛选后的 Top-40 特征名列表</td>
+</tr>
+<tr>
+<td><code>woe_map.csv</code></td>
+<td>所有特征的 WoE 分箱映射表（bin_label, woe, iv, feature 等）</td>
+</tr>
+<tr>
+<td><code>iv_summary.csv</code></td>
+<td>各特征 IV 汇总（feature, iv, n_bins, keep）</td>
+</tr>
+<tr>
+<td><code>lr_features.csv</code></td>
+<td>共线性处理后保留的 23 个 WoE 特征列名</td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputsscorecard"><code>outputs/scorecard/</code></h4>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scorecard.csv</code></td>
+<td><strong>最终评分卡</strong>，列：feature/bin_label/woe/coef/score/count/bad_rate/is_nan_bin</td>
+</tr>
+<tr>
+<td><code>score_dist.csv</code></td>
+<td>训练集（采样5000行）的评分分布，列：score/TARGET，用于分段违约率分析</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">4.4 日志文件</h3>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>outputs/run_log.txt</code></td>
+<td><code>nohup</code> 后台运行时的完整训练日志，含各步骤进度、各折 AUC/KS、IV 汇总、系数表等</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>文档生成时间：2026-03-02 | 基于实际训练结果（OOF AUC=0.7456，KS=0.3663，评分范围693~763）</em></p>
+
+</body>
+</html>

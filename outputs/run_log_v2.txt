@@ -1,0 +1,370 @@
+
+>>> Step 1: 读取数据
+[load] application          -> shape: (307511, 122)
+[load] bureau               -> shape: (1716428, 17)
+[load] bureau_balance       -> shape: (27299925, 3)
+[load] previous             -> shape: (1670214, 37)
+[load] pos                  -> shape: (10001358, 8)
+[load] credit_card          -> shape: (3840312, 23)
+[load] installments         -> shape: (13605401, 8)
+
+>>> Step 2: 特征工程
+  检测到缓存文件，直接加载...
+  特征表 shape: (307511, 214)
+
+>>> Step 3: LGB 交叉验证 + 特征重要性
+  检测到 LGB importance 缓存，直接加载（跳过重新训练）...
+
+  Top 20 重要特征:
+                   feature  importance
+               CREDIT_TERM       561.0
+           EXT_SOURCE_MEAN       357.6
+         POS_PROGRESS_MEAN       304.2
+               AMT_ANNUITY       270.0
+     PREV_CNT_PAYMENT_MEAN       263.8
+              EXT_SOURCE_2       260.8
+        CREDIT_GOODS_RATIO       259.8
+   PREV_DAYS_DECISION_MEAN       248.0
+                DAYS_BIRTH       247.8
+              EXT_SOURCE_3       245.2
+    DAYS_LAST_PHONE_CHANGE       244.8
+            EXT_SOURCE_2_3       243.6
+   BUREAU_DAYS_CREDIT_MEAN       228.8
+                 AGE_YEARS       227.2
+      ANNUITY_INCOME_RATIO       215.6
+         PREV_ANNUITY_MEAN       214.6
+     BUREAU_CREDIT_SUM_MAX       211.4
+                 POS_COUNT       209.8
+           BUREAU_UTIL_MAX       209.6
+REGION_POPULATION_RELATIVE       206.2
+
+>>> Step 4: 特征筛选
+
+[特征筛选] Top-40 特征: 40 个
+  LGB Top-40 特征数: 40
+
+>>> Step 4.5: 后处理精筛（Layer1 规则 + Layer3 EXT_SOURCE 业务过滤）
+
+=======================================================
+[后处理精筛] 三层过滤
+=======================================================
+  输入特征数: 40
+
+[Layer1 规则过滤] 删除 2 个:
+  ✗ AGE_YEARS
+  ✗ AMT_CREDIT
+[Layer2] 未传入 iv_summary，跳过相关系数过滤
+
+[Layer3 EXT_SOURCE 业务过滤] 删除 4 个:
+  ✗ EXT_SOURCE_3
+  ✗ EXT_SOURCE_1
+  ✗ EXT_SOURCE_2
+  ✗ EXT_SOURCE_STD
+
+[后处理精筛] 完成: 40 → 34 个特征
+  保留特征列表:
+     1. CREDIT_TERM
+     2. EXT_SOURCE_MEAN
+     3. POS_PROGRESS_MEAN
+     4. AMT_ANNUITY
+     5. PREV_CNT_PAYMENT_MEAN
+     6. CREDIT_GOODS_RATIO
+     7. PREV_DAYS_DECISION_MEAN
+     8. DAYS_BIRTH
+     9. DAYS_LAST_PHONE_CHANGE
+    10. EXT_SOURCE_2_3
+    11. BUREAU_DAYS_CREDIT_MEAN
+    12. ANNUITY_INCOME_RATIO
+    13. PREV_ANNUITY_MEAN
+    14. BUREAU_CREDIT_SUM_MAX
+    15. POS_COUNT
+    16. BUREAU_UTIL_MAX
+    17. REGION_POPULATION_RELATIVE
+    18. INST_RECENT_PAY_RATIO_6M
+    19. EXT_SOURCE_2_AGE
+    20. INST_COUNT
+    21. AMT_GOODS_PRICE
+    22. PREV_CREDIT_MAX
+    23. INST_PAYMENT_RATIO_MIN
+    24. BUREAU_CREDIT_SUM_MEAN
+    25. CREDIT_INCOME_RATIO
+    26. INST_PAYMENT_RATIO_MEAN
+    27. PREV_CREDIT_APP_RATIO
+    28. BUREAU_DAYS_CREDIT_MAX
+    29. DAYS_REGISTRATION
+    30. PREV_DOWN_PAY_RATIO
+    31. DAYS_ID_PUBLISH
+    32. INST_DBD_MEAN
+    33. EMPLOYED_EXT2_CROSS
+    34. EXT_SOURCE_1_2
+  精筛后特征数: 34
+
+>>> Step 5: WoE 编码
+
+=======================================================
+[Step 5] WoE 编码
+=======================================================
+
+[WoE] 开始拟合，共 34 个特征
+  CREDIT_TERM                                   IV=0.0392  [弱]  bins=3
+  EXT_SOURCE_MEAN                               IV=0.6070  [强]  bins=10
+  POS_PROGRESS_MEAN                             IV=0.0108  [无预测力]  bins=4
+  AMT_ANNUITY                                   IV=0.0131  [无预测力]  bins=3
+  PREV_CNT_PAYMENT_MEAN                         IV=0.0157  [无预测力]  bins=6
+  CREDIT_GOODS_RATIO                            IV=0.0732  [弱]  bins=6
+  PREV_DAYS_DECISION_MEAN                       IV=0.0442  [弱]  bins=8
+  DAYS_BIRTH                                    IV=0.0842  [弱]  bins=10
+  DAYS_LAST_PHONE_CHANGE                        IV=0.0464  [弱]  bins=7
+  EXT_SOURCE_2_3                                IV=0.3949  [强]  bins=8
+  BUREAU_DAYS_CREDIT_MEAN                       IV=0.1149  [中]  bins=8
+  ANNUITY_INCOME_RATIO                          IV=0.0054  [无预测力]  bins=8
+  PREV_ANNUITY_MEAN                             IV=0.0104  [无预测力]  bins=7
+  BUREAU_CREDIT_SUM_MAX                         IV=0.0208  [弱]  bins=3
+  POS_COUNT                                     IV=0.0206  [弱]  bins=6
+  BUREAU_UTIL_MAX                               IV=0.0948  [弱]  bins=5
+  REGION_POPULATION_RELATIVE                    IV=0.0301  [弱]  bins=6
+  INST_RECENT_PAY_RATIO_6M                      IV=0.0437  [弱]  bins=5
+  EXT_SOURCE_2_AGE                              IV=0.3338  [强]  bins=10
+  INST_COUNT                                    IV=0.0051  [无预测力]  bins=6
+  AMT_GOODS_PRICE                               IV=0.0434  [弱]  bins=3
+  PREV_CREDIT_MAX                               IV=0.0004  [无预测力]  bins=2
+  INST_PAYMENT_RATIO_MIN                        IV=0.0326  [弱]  bins=5
+  BUREAU_CREDIT_SUM_MEAN                        IV=0.0236  [弱]  bins=4
+  CREDIT_INCOME_RATIO                           IV=0.0035  [无预测力]  bins=4
+  INST_PAYMENT_RATIO_MEAN                       IV=0.0480  [弱]  bins=7
+  PREV_CREDIT_APP_RATIO                         IV=0.0002  [无预测力]  bins=3
+  BUREAU_DAYS_CREDIT_MAX                        IV=0.0728  [弱]  bins=9
+  DAYS_REGISTRATION                             IV=0.0268  [弱]  bins=7
+  PREV_DOWN_PAY_RATIO                           IV=0.0176  [无预测力]  bins=5
+  DAYS_ID_PUBLISH                               IV=0.0384  [弱]  bins=10
+  INST_DBD_MEAN                                 IV=0.0085  [无预测力]  bins=6
+  EMPLOYED_EXT2_CROSS                           IV=0.1182  [中]  bins=6
+  EXT_SOURCE_1_2                                IV=0.1519  [中]  bins=4
+
+[WoE] 拟合完成: 保留 23 个 / 剔除 11 个 (IV < 0.02)
+  WoE 映射表已保存: /Users/sanchuankanzi/Documents/code/home_credit_scorecard/outputs/features/woe_map.csv
+  IV 汇总已保存:   /Users/sanchuankanzi/Documents/code/home_credit_scorecard/outputs/features/iv_summary.csv
+
+[WoE Transform] 转换 23 个保留特征
+  WoE 特征矩阵 shape: (307511, 25)
+
+[Step 5] WoE 编码完成
+  最终特征数: 23
+=======================================================
+
+>>> Step 5.5: Layer2 相关系数过滤（corr > 0.85，保留 IV 高者）
+
+=======================================================
+[后处理精筛] 三层过滤
+=======================================================
+  输入特征数: 34
+
+[Layer1 规则过滤] 删除 0 个:
+  [Layer2] ✗ POS_PROGRESS_MEAN                   corr=0.883  IV=0.0108  (保留 PREV_CNT_PAYMENT_MEAN)
+  [Layer2] ✗ PREV_CNT_PAYMENT_MEAN               corr=0.879  IV=0.0157  (保留 INST_PAYMENT_RATIO_MIN)
+  [Layer2] ✗ BUREAU_DAYS_CREDIT_MAX              corr=0.924  IV=0.0728  (保留 BUREAU_DAYS_CREDIT_MEAN)
+  [Layer2] ✗ INST_PAYMENT_RATIO_MIN              corr=0.900  IV=0.0326  (保留 INST_PAYMENT_RATIO_MEAN)
+  [Layer2] ✗ INST_DBD_MEAN                       corr=0.852  IV=0.0085  (保留 INST_PAYMENT_RATIO_MEAN)
+[Layer2 相关系数过滤] 删除 5 个
+
+[Layer3 EXT_SOURCE 业务过滤] 删除 0 个:
+
+[后处理精筛] 完成: 34 → 29 个特征
+  保留特征列表:
+     1. CREDIT_TERM
+     2. EXT_SOURCE_MEAN
+     3. AMT_ANNUITY
+     4. CREDIT_GOODS_RATIO
+     5. PREV_DAYS_DECISION_MEAN
+     6. DAYS_BIRTH
+     7. DAYS_LAST_PHONE_CHANGE
+     8. EXT_SOURCE_2_3
+     9. BUREAU_DAYS_CREDIT_MEAN
+    10. ANNUITY_INCOME_RATIO
+    11. PREV_ANNUITY_MEAN
+    12. BUREAU_CREDIT_SUM_MAX
+    13. POS_COUNT
+    14. BUREAU_UTIL_MAX
+    15. REGION_POPULATION_RELATIVE
+    16. INST_RECENT_PAY_RATIO_6M
+    17. EXT_SOURCE_2_AGE
+    18. INST_COUNT
+    19. AMT_GOODS_PRICE
+    20. PREV_CREDIT_MAX
+    21. BUREAU_CREDIT_SUM_MEAN
+    22. CREDIT_INCOME_RATIO
+    23. INST_PAYMENT_RATIO_MEAN
+    24. PREV_CREDIT_APP_RATIO
+    25. DAYS_REGISTRATION
+    26. PREV_DOWN_PAY_RATIO
+    27. DAYS_ID_PUBLISH
+    28. EMPLOYED_EXT2_CROSS
+    29. EXT_SOURCE_1_2
+  Layer2 过滤后特征数: 29
+
+  IV 汇总 Top-20:
+                   feature       iv  n_bins  keep
+           EXT_SOURCE_MEAN 0.607028      10  True
+            EXT_SOURCE_2_3 0.394861       8  True
+          EXT_SOURCE_2_AGE 0.333819      10  True
+            EXT_SOURCE_1_2 0.151918       4  True
+       EMPLOYED_EXT2_CROSS 0.118213       6  True
+   BUREAU_DAYS_CREDIT_MEAN 0.114876       8  True
+           BUREAU_UTIL_MAX 0.094849       5  True
+                DAYS_BIRTH 0.084175      10  True
+        CREDIT_GOODS_RATIO 0.073248       6  True
+   INST_PAYMENT_RATIO_MEAN 0.047966       7  True
+    DAYS_LAST_PHONE_CHANGE 0.046420       7  True
+   PREV_DAYS_DECISION_MEAN 0.044245       8  True
+  INST_RECENT_PAY_RATIO_6M 0.043731       5  True
+           AMT_GOODS_PRICE 0.043379       3  True
+               CREDIT_TERM 0.039170       3  True
+           DAYS_ID_PUBLISH 0.038443      10  True
+REGION_POPULATION_RELATIVE 0.030076       6  True
+         DAYS_REGISTRATION 0.026810       7  True
+    BUREAU_CREDIT_SUM_MEAN 0.023572       4  True
+     BUREAU_CREDIT_SUM_MAX 0.020755       3  True
+
+>>> Step 6: Logistic Regression 建模
+
+=======================================================
+[Step 6] Logistic Regression 建模
+=======================================================
+
+[Step 6-1] 共线性处理
+  [共线性剔除] BUREAU_CREDIT_SUM_MAX_WOE                     corr=0.861 IV=0.0208 (保留 BUREAU_CREDIT_SUM_MEAN_WOE)
+
+[共线性] 原始: 21 个 → 剔除: 1 个 → 保留: 20 个
+
+[Step 6-2] 5折交叉验证
+
+[LR CV] 开始 5 折交叉验证
+  特征数: 20  样本量: 307511
+  Fold 1  AUC=0.7439  KS=0.3650  Gini=0.4878
+  Fold 2  AUC=0.7484  KS=0.3753  Gini=0.4968
+  Fold 3  AUC=0.7424  KS=0.3627  Gini=0.4849
+  Fold 4  AUC=0.7510  KS=0.3789  Gini=0.5019
+  Fold 5  AUC=0.7383  KS=0.3555  Gini=0.4766
+
+  ── OOF 汇总 ─────────────────────────────
+  OOF AUC  = 0.7448   ✗ 偏弱
+  OOF KS   = 0.3657   ✓ OK
+  OOF Gini = 0.4895
+
+[Step 6-3] 系数表 & 方向检验
+
+  [方向检验] ⚠ 发现 3 个系数方向异常特征：
+    EXT_SOURCE_2_AGE_WOE                          coef=0.0355  IV=0.3338
+    DAYS_LAST_PHONE_CHANGE_WOE                    coef=0.0054  IV=0.0464
+    AMT_GOODS_PRICE_WOE                           coef=0.0348  IV=0.0434
+  → 建议检查对应特征的WoE单调性或是否存在共线性残留
+  系数表已保存: /Users/sanchuankanzi/Documents/code/home_credit_scorecard/outputs/models/lr_coef_table.csv
+
+  Top-10 特征系数（按IV排序）：
+                    feature  coef_mean  coef_std       iv direction
+        EXT_SOURCE_MEAN_WOE  -0.480963  0.009197 0.607028   ✓ 负（预期）
+         EXT_SOURCE_2_3_WOE  -0.158186  0.006344 0.394861   ✓ 负（预期）
+       EXT_SOURCE_2_AGE_WOE   0.035510  0.002128 0.333819   ✗ 正（异常）
+         EXT_SOURCE_1_2_WOE  -0.147887  0.005502 0.151918   ✓ 负（预期）
+    EMPLOYED_EXT2_CROSS_WOE  -0.102778  0.003900 0.118213   ✓ 负（预期）
+BUREAU_DAYS_CREDIT_MEAN_WOE  -0.042049  0.003657 0.114876   ✓ 负（预期）
+        BUREAU_UTIL_MAX_WOE  -0.215042  0.004143 0.094849   ✓ 负（预期）
+             DAYS_BIRTH_WOE  -0.042369  0.004918 0.084175   ✓ 负（预期）
+     CREDIT_GOODS_RATIO_WOE  -0.206601  0.001333 0.073248   ✓ 负（预期）
+INST_PAYMENT_RATIO_MEAN_WOE  -0.159177  0.003147 0.047966   ✓ 负（预期）
+
+[Step 6] LR 建模完成
+=======================================================
+
+>>> Step 7: 评分卡生成
+
+=======================================================
+[Step 7] 评分卡生成
+=======================================================
+[评分卡参数]
+  PDO=20, 基准分=600, 基准好坏比=50
+  factor = 28.8539
+  offset = 712.8771
+
+[评分卡] 共生成 20 个特征、133 条分箱得分记录
+  （已采样 5000 行进行校验）
+
+  全量分布：均值=728.6  std=15.2  min=692.0  max=763.7
+  好人均分：729.7  坏人均分：716.6  差值：13.1
+  方向校验：✓ 好人分 > 坏人分（正确）
+
+  分数段违约率（应随分数升高而单调递减）：
+         score_bin  count  bad_rate
+(691.969, 706.228]    500    0.2500
+(706.228, 714.098]    500    0.1600
+ (714.098, 719.87]    501    0.0998
+ (719.87, 725.302]    499    0.0721
+ (725.302, 729.89]    501    0.0639
+  (729.89, 733.93]    500    0.0680
+ (733.93, 738.356]    499    0.0341
+ (738.356, 742.64]    501    0.0339
+ (742.64, 747.981]    499    0.0281
+ (747.981, 763.68]    500    0.0140
+  评分卡已保存: /Users/sanchuankanzi/Documents/code/home_credit_scorecard/outputs/scorecard/scorecard.csv
+  分数分布已保存: /Users/sanchuankanzi/Documents/code/home_credit_scorecard/outputs/scorecard/score_dist.csv
+
+[评分卡预览] 前5个特征：
+
+══════════════════════════════════════════════════════════════════════
+特征                                  分箱区间                          WoE      得分      坏率
+══════════════════════════════════════════════════════════════════════
+
+▶ EXT_SOURCE_MEAN
+     (-inf, 0.303]                   -1.2169    19.3  0.2287
+     (0.303, 0.384]                  -0.6611    27.0  0.1454
+     (0.384, 0.439]                  -0.2919    32.1  0.1052
+     (0.439, 0.484]                  -0.0082    36.0  0.0813
+     (0.484, 0.524]                   0.2446    39.6  0.0643
+     (0.524, 0.564]                   0.4347    42.2  0.0538
+     (0.564, 0.602]                   0.7029    45.9  0.0417
+     (0.602, 0.644]                   0.8188    47.5  0.0373
+     (0.644, 0.692]                   1.0686    51.0  0.0293
+     (0.692, inf]                     1.4389    56.1  0.0204
+
+▶ EXT_SOURCE_2_3
+     (-inf, 0.0849]                  -0.5555    33.6  0.1327
+     (0.0849, 0.148]                 -0.4330    34.2  0.1192
+     (0.148, 0.207]                  -0.0543    35.9  0.0848
+     (0.207, 0.264]                   0.2539    37.3  0.0638
+     (0.264, 0.322]                   0.4717    38.3  0.0519
+     (0.322, 0.383]                   0.7875    39.8  0.0384
+     (0.383, 0.455]                   1.0271    40.9  0.0305
+     (0.455, inf]                     1.4373    42.7  0.0204
+
+▶ EXT_SOURCE_2_AGE
+     (-inf, 8.163]                   -0.9962    37.2  0.1921
+     (8.163, 12.901]                 -0.4684    36.6  0.1230
+     (12.901, 16.432]                -0.2142    36.4  0.0981
+     (16.432, 19.474]                -0.0383    36.2  0.0836
+     (19.474, 22.441]                 0.1340    36.0  0.0713
+     (22.441, 25.515]                 0.2792    35.9  0.0623
+     (25.515, 28.82]                  0.4082    35.7  0.0552
+     (28.82, 32.656]                  0.5168    35.6  0.0498
+     (32.656, 37.695]                 0.6883    35.5  0.0422
+     (37.695, inf]                    1.0538    35.1  0.0297
+
+▶ EXT_SOURCE_1_2
+     (-inf, 0.169]                   -0.1828    35.4  0.0954
+     (0.169, 0.277]                   0.1588    36.8  0.0697
+     (0.277, 0.404]                   0.6071    38.8  0.0457
+     (0.404, inf]                     1.2585    41.5  0.0243
+
+▶ EMPLOYED_EXT2_CROSS
+     (-inf, 1.502]                   -0.2425    35.4  0.1007
+     (1.502, 2.237]                  -0.0935    35.9  0.0879
+     (2.237, 3.253]                   0.1252    36.5  0.0719
+     (3.253, 4.767]                   0.3275    37.1  0.0595
+     (4.767, 7.467]                   0.5567    37.8  0.0479
+     (7.467, inf]                     0.8325    38.6  0.0368
+══════════════════════════════════════════════════════════════════════
+
+[Step 7] 评分卡生成完成
+  输出目录: /Users/sanchuankanzi/Documents/code/home_credit_scorecard/outputs/scorecard
+=======================================================
+
+>>> 全流程完成
